@@ -1,0 +1,58 @@
+// Images (including svg)
+//
+
+.its123-container {
+
+  svg {
+    width: 100%;
+    @include media-breakpoint-up(md) {
+      width: 85%;
+    }
+  }
+}
+
+.its123-report {
+  svg {
+    // SVG resize IE bug fix (IE10+)
+    // Set fixed height for all svgs
+    @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+        height: 700px;
+
+        // Custom height for specific svgs
+        &.its123-svg-stanine {
+          height: 200px;
+        }
+    }
+    // Bug is not present in Edge, reset the height
+    @supports(-ms-accelerator: true) {
+        height: auto;
+    }
+
+    path {
+      color: $color-figure !important;
+
+      &.its123-svg-primary-lighten {
+        fill: $color-figure-highlight !important;
+      }
+      &.its123-svg-primary-darken {
+        fill: $color-figure-shadow !important;
+      }
+
+      $nColors: 9;
+      @for $i from 1 through ($nColors + 1) {
+
+        $adjustedLightness: (($i - ($nColors / 2)) * 10) * 1%;
+        $adjustedColor: adjust-color($color-figure, $lightness: $adjustedLightness);
+
+        &.its123-svg-color-#{$i} {
+          fill: $adjustedColor !important;
+          stroke: $adjustedColor !important;
+        }
+      }
+    }
+
+    linearGradient stop.its123-svg-stop-color {
+      stop-color: $color-figure !important;
+    }
+  }
+}

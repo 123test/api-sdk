@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>123test API example</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+
+    <link href="//cdn.123test.com/assets/api/styles/latest/themes/123test.css" type="text/css" rel="stylesheet">
+
+    <style type="text/css">
+        /* Optional css to center the test */
+        .its123-container {
+            margin: 0 auto;
+            max-width: 920px;
+        }
+    </style>
+</head>
+<body>
+<h1>Load Api Product</h1>
+
+<div id='its123api-continued-message' class='alert alert-info' style='display: none'>
+    <p>Je hebt een deel van deze test al ingevuld, je kunt nu verdergaan waar je gebleven was. Wil je liever opnieuw beginnen? Klik dan op de knop hieronder.</p>
+    <a class='btn btn-primary'>Begin opnieuw</a>
+</div>
+
+
+<div id="its123api-loading" class="its123-alert its123-info its123-loading-indicator">
+    <div class="its123-loading-spinner">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>
+<div id="its123api-product" class='its123-container'>
+    <!-- Instruments are rendered in this div, keep empty -->
+</div>
+
+<div id='its123api-unavailable-message' class='alert alert-danger' style='display: none;'>
+    <p>Het is dit op dit moment niet mogelijk om een test te maken of in te vullen. Controleer je internetverbinding en probeer het over een paar minuten nogmaals door de pagina te herladen.</p>
+</div>
+<div id='its123api-error-message' class='alert alert-danger' style='display: none;'>
+    <p>Er is een fout opgetreden bij het laden of opsturen van de test. Herlaad de pagina om het opnieuw te proberen.</p>
+</div>
+<div id='its123api-submit-failed-message' class='alert alert-danger' style='display: none;'>
+    <p>Er is een fout opgetreden bij het opsturen van je antwoorden. Controleer je internetverbinding en probeer het over een paar minuten opnieuw.</p>
+</div>
+
+<div id="its123api-report" class='its123-container'>
+    <!-- HTML reports are rendered in this div, keep empty -->
+</div>
+
+
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type='text/javascript'>
+
+    window.startIts123Api = function(uuid) {
+        window.loadIts123Api=function(a,b,c){var d="undefined"!=typeof Promise&&Promise.toString().indexOf("[native code]")!==-1&&window.fetch,e=function(a,b){var c=document.createElement("script");c.type="text/javascript",c.src=a,c.onload=b;var d=document.getElementsByTagName("script")[0];d.parentNode.insertBefore(c,d)};d?e(a+"/assets/api/js/"+b+"/its123api.min.js",c):e(a+"/assets/api/js/"+b+"/its123api.polyfill.min.js",c)};
+
+        var startApi = function () {
+
+            var api = new Its123({
+                domain: 'https://api.123test.com',
+                apiKey: '{PUBLIC-API-KEY}',
+            });
+
+            api.on(['instrument-already-completed', 'instrument-item-data-loaded', 'instrument-continue'], function() {
+                document.getElementById('its123api-loading').style.display = 'none';
+                $('#its123api-continued-message').show();
+
+            });
+
+            api.on('error', function(error) {
+                if(error.status !== 408) {
+                    document.getElementById('its123api-loading').style.display = 'none';
+                    $('#its123api-error-message').show();
+                }
+            });
+            api.on('api-unavailable', function() {
+                document.getElementById('its123api-loading').style.display = 'none';
+                $('#its123api-unavailable-message').show();
+            });
+            api.on('instrument-submit-failed', function() {
+                document.getElementById('its123api-loading').style.display = 'none';
+                $('#its123api-submit-failed-message').show();
+            });
+            api.on('instrument-submitting', function() {
+                document.getElementById('its123api-loading').style.display = 'block';
+                $('#its123api-submit-failed-message').hide();
+                $('.its123api-brochure').hide();
+            });
+
+            api.on('product-loaded', function(product) {
+
+                console.log(product);
+                var request = $.ajax({
+                    url: '/save-product.php?productId=' + product.product_access_code,
+                    type: 'GET',
+                    cache: false,
+                    dataType: 'json'
+                });
+            });
+
+            api.loadProduct('competentietest-nl_nl-1', { renderReport: true, user: uuid });;
+
+            $('#its123api-continued-message a').click(function() {
+                document.getElementById('its123api-loading').style.display = 'block';
+                $('#its123api-continued-message').hide();
+
+                localStorage.removeItem('its123Api-competentietest-nl_nl-1');
+                api.restartProduct('competentietest-nl_nl-1',  { renderReport: false, user: uuid });
+            });
+        };
+
+        loadIts123Api('https://cdn.123test.com', 'latest', startApi);
+    };
+
+    window.startIts123Api('f2d37929-c6b4-47f5-a0bb-d946d9aec15f');
+</script>
+</body>
+</html>

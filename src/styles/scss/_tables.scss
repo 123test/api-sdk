@@ -1,0 +1,57 @@
+// Table styles
+//
+
+.its123-table {
+  display: table;
+
+  // Set display properties to their correct values
+  tr       { display: table-row }
+  thead    { display: table-header-group }
+  tbody    { display: table-row-group }
+  tfoot    { display: table-footer-group }
+  col      { display: table-column }
+  colgroup { display: table-column-group }
+  td, th   { display: table-cell }
+  caption  { display: table-caption }
+
+  th, td {
+    padding: 5px 10px;
+  }
+  th {
+    font-weight: bold;
+    text-align: left;
+  }
+}
+
+.its123-table-bordered {
+  border-spacing: 0;
+
+  td, th {
+    border-left: 1px solid $table-border-color;
+    border-bottom: 1px solid $table-border-color;
+  }
+
+  tr:first-child th, tr:first-child td {
+    border-top: 1px solid $table-border-color;
+  }
+  th:last-child, td:last-child {
+    border-right: 1px solid $table-border-color;
+  }
+
+  tr:first-child {
+    th:first-child {
+      border-top-left-radius: $border-radius;
+    }
+    th:last-child {
+      border-top-right-radius: $border-radius;
+    }
+  }
+  tr:last-child {
+    td:first-child {
+      border-bottom-left-radius: $border-radius;
+    }
+    td:last-child {
+      border-bottom-right-radius: $border-radius;
+    }
+  }
+}

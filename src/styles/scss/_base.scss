@@ -1,0 +1,32 @@
+// Base theme
+//
+// Loads all required dependencies
+//
+
+// Import variables, can be overwritten by themes
+@import "_variables";
+
+// Utilities
+@import "_reset";
+@import "_breakpoints";
+@import "_utilities";
+
+// General elements
+@import "_typography";
+@import "_alerts";
+@import "_icons";
+@import "_tables";
+@import "_buttons";
+@import "_images";
+@import "_ui";
+
+// Load items last to overwrite base styles
+@import "_items";
+
+.its123-container {
+  font-family: $font-family;
+  color: $text-color;
+  line-height: 1.15;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}

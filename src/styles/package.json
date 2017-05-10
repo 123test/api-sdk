@@ -1,0 +1,25 @@
+{
+  "name": "its123api-styles",
+  "version": "1.0.0",
+  "description": "Themes for 123test API",
+  "main": "index.js",
+  "scripts": {
+    "build": "node-sass scss --output-style compressed --output css",
+    "minify": "node-sass scss --output-style compressed --output ../../dist/css && postcss --no-map.inline --use autoprefixer --replace ../../dist/css/themes/*.css",
+    "watch": "node-sass --watch scss --output css",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "browser-sync start --server --files='index.html,css/**/*.css'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/123test/api-sdk"
+  },
+  "author": "Wouter Bulten",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "autoprefixer": "^6.5.3",
+    "node-sass": "^3.11.2",
+    "postcss-cli": "^2.6.0"
+  }
+}

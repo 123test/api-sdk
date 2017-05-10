@@ -1,0 +1,92 @@
+// Buttons
+//
+
+@mixin button-background($from, $to) {
+  background-color: $from;
+  background-image: -webkit-linear-gradient(top,$from, $to);
+  background-image: linear-gradient(to bottom,$from, $to);
+  background-repeat: repeat-x;
+}
+
+.its123-button {
+  color: $button-text-color;
+  text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+  outline: 0;
+
+  padding: 11px 19px;
+  font-size: 17.5px;
+
+  border-radius: $button-border-radius;
+
+  @include button-background($button-bg-from, $button-bg-to);
+  border-color: $button-border-color;
+
+  &:hover {
+    cursor: pointer;
+    background-color: $button-bg-to;
+    background-position: 0 -15px;
+    -webkit-transition: background-position 0.1s linear;
+    transition: background-position 0.1s linear;
+  }
+  &:active {
+    background-image: none;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,.15),0 1px 2px rgba(0,0,0,.05);
+  }
+
+  &[disabled] {
+    background-color: $button-bg-to;
+    cursor: default;
+    background-image: none;
+    opacity: 0.65;
+    box-shadow: none;
+  }
+}
+.its123-button-text {
+  background: none;
+  border: 0;
+  color: $color-secondary;
+  padding: 11px 19px;
+  font-size: 17.5px;
+
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  &[disabled] {
+    color: lighten($text-color, 10%);
+    text-decoration: none;
+    cursor: not-allowed;
+  }
+}
+
+.its123-loading-spinner {
+  // Spinner adapted from https://github.com/tobiasahlin/SpinKit
+  margin: 0 auto;
+  text-align: center;
+
+  & > div {
+    width: 13px;
+    height: 13px;
+    margin: 0 2px 0 2px;
+    background-color: white;
+
+    display: inline-block;
+    animation: its123-spinner-delay 1.4s infinite ease-in-out both;
+  }
+
+  & div:nth-child(1) {
+    animation-delay: -0.32s;
+  }
+
+  div:nth-child(2){
+    animation-delay: -0.16s;
+  }
+}
+
+@keyframes its123-spinner-delay {
+  0%, 80%, 100% {
+    transform: scale(0);
+  } 40% {
+    transform: scale(1.0);
+  }
+}

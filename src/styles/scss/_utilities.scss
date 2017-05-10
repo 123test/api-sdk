@@ -1,0 +1,9 @@
+// Class containing various utilities
+//
+
+
+.its123-alternate-background {
+  &:nth-child(odd) {
+    background-color: $item-bg-color-alternate;
+  }
+}

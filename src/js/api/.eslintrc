@@ -1,0 +1,19 @@
+{
+  "extends": "airbnb",
+  "rules": {
+    "no-console": 0
+  },
+  "env": {
+    "browser": true,
+  },
+  "globals": {
+    "fetch": true,
+  },
+  "parserOptions": {
+    "ecmaVersion": 8,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    }
+  }
+}

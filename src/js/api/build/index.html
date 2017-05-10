@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>123test API example</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+
+    <link href="css/123test.css" type="text/css" rel="stylesheet">
+
+    <script type="text/javascript" src="its123api.js"></script>
+
+    <!-- api-key.js is not included in this repo -->
+    <!-- To make it work, create a file in the build directory -->
+    <!-- The file should two variables: var apiKey = <your api key>; var domain = < api domain >; -->
+    <script type="text/javascript" src="api-key.js"></script>
+    <style type="text/css">
+        /* Optional css to center the test */
+        .its123-container {
+            margin: 0 auto;
+            max-width: 920px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="its123-container">
+
+    <!-- Alert and info messages -->
+    <div class="its123-alert its123-error hidden" id="its123-error">
+        <p>An unexpected error occurred. We are sorry for the inconvenience. Please try to reload the page.</p>
+    </div>
+    <div class="its123-alert its123-error hidden" id="its123-instrument-expired">
+        <p>We were not able to save your test data. Please reload the page and try again.</p>
+    </div>
+    <div class="its123-alert its123-error hidden" id="its123-unavailable">
+        <p>The 123test API is currently unavailable</p>
+    </div>
+    <div class="its123-alert its123-info hidden" id="its123-item-data-loaded">
+        <p>You've already filled out part of this test. You can continue where you left off or click the button below if you’d rather start over.</p>
+
+        <button class="its123-button" id="its123-start-over">Start over</button>
+    </div>
+
+
+    <div class="its123-alert its123-info its123-loading-indicator" id="its123api-loading">
+        <p>Loading..</p>
+    </div>
+
+    <div id="its123api-product">
+    </div>
+
+    <div class="its123-alert its123-error hidden" id="its123-submit-failed">
+        <p>An error occurred when submitting your test data. Please check your internet connection and try again in a few minutes.</p>
+    </div>
+
+    <div id="its123api-report">
+    </div>
+</div>
+
+<script type='text/javascript'>
+
+    function loadApi(product) {
+
+        var api = new Its123({
+            domain: domain,
+            apiKey: apiKey,
+        });
+
+        api.on('error', function(error) {
+            document.getElementById('its123-error').classList.remove('hidden');
+        });
+        api.on('api-unavailable', function() {
+            document.getElementById('its123-unavailable').classList.remove('hidden');
+        });
+        api.on('instrument-submit-failed', function() {
+            document.getElementById('its123-submit-failed').classList.remove('hidden');
+        });
+        api.on('instrument-submitting', function() {
+            document.getElementById('its123-submit-failed').classList.add('hidden');
+        });
+        api.on('instrument-run-not-found', function() {
+            document.getElementById('its123-instrument-expired').classList.remove('hidden');
+        });
+
+        api.on(['instrument-already-completed', 'instrument-item-data-loaded'], function() {
+            document.getElementById('its123-item-data-loaded').classList.remove('hidden');
+        });
+
+        document.getElementById('its123-start-over').addEventListener('click', function() {
+            document.getElementById('its123-item-data-loaded').classList.add('hidden');
+            api.restartProduct(product);
+        });
+
+        api.loadProduct(product);
+    }
+
+    loadApi('jung-en_us-1');
+
+</script>
+<script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
+
+</body>
+</html>

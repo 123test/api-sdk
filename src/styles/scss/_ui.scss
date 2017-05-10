@@ -1,0 +1,29 @@
+// General ui elements
+
+.its123-progress {
+  background-color: $progress-bg-color;
+  min-height: 20px;
+  border-radius: 5px;
+  position: relative;
+  margin: 30px 0;
+  font-weight: bold;
+
+  .its123-progress-bar {
+    background-color: $progress-bar-color;
+    border-radius: 5px 0 0 5px;
+    height: 20px;
+
+    position: absolute;
+    top: 0;
+    z-index: 2;
+    border-right: 1px solid darken($progress-bar-color, 20%);
+  }
+  .its123-progress-label {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    z-index: 3;
+
+    color: black;
+  }
+}

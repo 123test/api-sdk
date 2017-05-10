@@ -1,0 +1,47 @@
+/*!
+ * 123test API SDK CSS
+ * https://github.com/123test/api-sdk
+ *
+ * 123test theme
+ *
+ * Copyright 2016 123test
+ * Licensed under MIT
+ *
+ * Builds upon
+ * normalize.css v5.0.0 | https://github.com/necolas/normalize.css
+ * Bootstrap v4 (sass utilties) | https://getbootstrap.com
+ * SpinKit (loading icon) | https://github.com/tobiasahlin/SpinKit
+ */
+
+// Theme specific overwrites
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 300;
+    src: url('//cdn.123test.com/assets/fonts/open-sans-v10-latin-300.eot');
+    src: local('Open Sans Light'), local('OpenSans-Light'), url('//cdn.123test.com/assets/fonts/open-sans-v10-latin-300.eot?#iefix') format('embedded-opentype'), url('//cdn.123test.com/assets/fonts/open-sans-v10-latin-300.woff2') format('woff2'), url('//cdn.123test.com/assets/fonts/open-sans-v10-latin-300.woff') format('woff'), url('//cdn.123test.com/assets/fonts/open-sans-v10-latin-300.ttf') format('truetype'), url('//cdn.123test.com/assets/fonts/open-sans-v10-latin-300.svg#OpenSans') format('svg');
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: url('//cdn.123test.com/assets/fonts/open-sans-v10-latin-regular.eot');
+    src: local('Open Sans'), local('OpenSans'), url('//cdn.123test.com/assets/fonts/open-sans-v10-latin-regular.eot?#iefix') format('embedded-opentype'), url('//cdn.123test.com/assets/fonts/open-sans-v10-latin-regular.woff2') format('woff2'), url('//cdn.123test.com/assets/fonts/open-sans-v10-latin-regular.woff') format('woff'), url('//cdn.123test.com/assets/fonts/open-sans-v10-latin-regular.ttf') format('truetype'), url('//cdn.123test.com/assets/fonts/open-sans-v10-latin-regular.svg#OpenSans') format('svg');
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 700;
+    src: url('//cdn.123test.com/assets/fonts/open-sans-v10-latin-700.eot');
+    /* IE9 Compat Modes */
+    src: local('Open Sans Bold'), local('OpenSans-Bold'), url('//cdn.123test.com/assets/fonts/open-sans-v10-latin-700.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('//cdn.123test.com/assets/fonts/open-sans-v10-latin-700.woff2') format('woff2'), /* Super Modern Browsers */ url('//cdn.123test.com/assets/fonts/open-sans-v10-latin-700.woff') format('woff'), /* Modern Browsers */ url('//cdn.123test.com/assets/fonts/open-sans-v10-latin-700.ttf') format('truetype'), /* Safari, Android, iOS */ url('//cdn.123test.com/assets/fonts/open-sans-v10-latin-700.svg#OpenSans') format('svg');
+    /* Legacy iOS */
+}
+
+$font-family: "Open Sans", Arial, sans-serif;
+$text-color: #777777;
+
+@import "../_base.scss";

@@ -1,0 +1,74 @@
+// Base file
+//
+// Defines defaults for all variables
+//
+
+// General colors
+$color-primary:       #DB7B03 !default;
+$color-secondary:     #0182A9 !default;
+$text-color:          #373a3c !default;
+$link-color:          $color-secondary !default;
+$link-hover-color:    $link-color !default;
+$text-muted:          lighten($text-color, 15%) !default;
+
+$color-figure:            $color-primary !default;
+$color-figure-highlight:  lighten($color-figure, 18%) !default;
+$color-figure-shadow:     darken($color-figure, 10%) !default;
+
+$item-bg-color:       #ffffff !default;
+$item-border-color:   #ccc !default;
+$item-bg-color-alternate: #eee !default;
+$item-bg-color-counter: gray !default;
+
+$table-border-color:  #ccc !default;
+
+$button-bg-from:      #01A4D3 !default;
+$button-bg-to:        #0182A9 !default;
+$button-border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25) !default;
+$button-text-color:   #ffffff !default;
+
+$error-text-color:    #C10000 !default;
+$error-border-color:  transparentize($error-text-color, 0.5) !default;
+
+$color-required:      $error-text-color !default;
+
+$progress-bg-color:   #eceeef;
+$progress-bar-color:  #6cb3c7;
+
+// general block level settings
+$border-radius: 3px !default;
+$button-border-radius: 6px !default;
+$item-padding: 20px 20px 20px 20px !default;
+$item-border: 1px solid $item-border-color !default;
+$fieldset-border: 0 !default;
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+) !default;
+
+// Font settings
+$font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif !default;
+$font-size-item: 14px !default;
+$font-line-height-item: 20px !default;
+$text-color-item: $text-color !default;
+$link-decoration: none !default;
+$link-hover-decoration: underline !default;
+
+// General info messages/alerts
+$state-info-text:    #3a87ad !default;
+$state-info-bg:      #d9edf7 !default;
+$state-info-border:  #bce8f1 !default;
+
+$state-error-text:      #b94a48 !default;
+$state-error-bg:        #f2dede !default;
+$state-error-border:    #eed3d7 !default;
+
+$alert-padding: 5px 15px !default;
+
+// Tables
+$table-bg:  #fff !default;
+$table-cell-padding: 5px !default;
