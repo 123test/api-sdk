@@ -342,10 +342,6 @@ legend.its123-legend {
     vertical-align: top;
     width: 60%;
     padding-left: 10px;
-
-    @include media-breakpoint-up(xl) {
-      width: 70%;
-    }
   }
   .its123-thumb-icon {
     display: inline-block;
