@@ -9,6 +9,8 @@ import 'core-js/es6/promise';
 import 'core-js/es6/object';
 // Import polyfill for string functions
 import 'core-js/fn/string/starts-with';
+// Import polyfill for array functions
+import 'core-js/es6/array';
 // Import polyfill for fetch
 import 'whatwg-fetch';
 
