@@ -367,6 +367,7 @@ class Its123 {
         this.bindInstrumentStorageListeners(accessCode);
 
         this.runResourceFunctions(resources);
+        this.triggerEvent('instrument-submitted');
         // Run function again until instrument has ended
         return await this.processApiInstrumentResponse(accessCode,
           await this.processFormSubmit(accessCode),
