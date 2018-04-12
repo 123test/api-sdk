@@ -1,0 +1,272 @@
+// Variables
+
+// Colors
+$base: #606060;
+$orange: #DB7B03;
+$blue: #0182A9;
+$lightgrey: #efefef;
+$darkgrey: #404040;
+$green: #5bb75b;
+$errorColor: #C10000;
+
+$item-bg-color-alternate: #f9f9f9 !default;
+
+// Mixins
+@mixin transEase() {
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -ms-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+// api
+.its123-container {
+
+    .its123-item-trivia {
+
+        .its123-trivia-question {
+            color: $base;
+        }
+
+        .its123-counter {
+            color: $base;
+        }
+    }
+
+    // Typography
+
+    h1, h2, h3, h4, h5, h6, legend.its123-legend {
+        font-weight: 600;
+        color: $base;
+    }
+
+    h2 {
+        font-size: 1.4em;
+        line-height: 1.6em;
+    }
+
+    p {
+        font-size: 16px;
+        color: $base;
+        line-height: 30px;
+        margin: 0 0 30px;
+    }
+
+    ul {
+
+        li {
+            line-height: 30px;
+        }
+    }
+
+    b,strong {
+        font-weight: 600;
+    }
+
+    // Tables
+    table {
+        margin: 0 0 30px;
+    }
+
+    table, tr, td, ul, li {
+        font-size: 16px;
+    }
+
+    td, th {
+        font-size: 16px;
+        color: $base;
+        line-height: 30px;
+    }
+
+
+    // Buttons
+    button,
+    html [type="button"],
+    [type="reset"],
+    [type="submit"] {
+        margin: 25px 0;
+    }
+
+    .its123-button-next {
+        float: right;
+        background: $blue;
+        color: white;
+        border: solid $blue 1px;
+        @include transEase;
+
+        &:focus,
+        &:hover,
+        &:active,
+        &.active {
+            background: white;
+            color: $blue;
+        }
+    }
+
+    // Items
+    .its123-item,
+    fieldset.its123-item {
+        font-size: 16px;
+        color: $base;
+        line-height: 26px;
+    }
+
+    .its123-label {
+        line-height: 20px;
+    }
+
+    .its123-item-horizontal {
+
+        &:after {
+            visibility: hidden;
+            display: block;
+            font-size: 0;
+            content: " ";
+            clear: both;
+            height: 0;
+        }
+    }
+
+    // Likert
+    .its123-likert {
+
+
+        .its123-item {
+            min-height: 0;
+            margin-bottom: 0;
+            padding: 25px 10px;
+
+            &:nth-child(2n+1) {
+                background: #f9f9f9;
+            }
+
+            &:hover {
+                background: #f1f1f1;
+            }
+        }
+
+        @media (min-width: 768px) {
+
+            .its123-item {
+                padding: 13px 10px;
+
+                &:nth-child(10n+1) {
+                    padding: 13px 10px 13px 0;
+                    background: linear-gradient(180deg, #FFF 35px,#f9f9f9 35px);
+
+                    &:hover {
+                        background: linear-gradient(180deg, #FFF 35px,#f1f1f1 35px);
+                    }
+
+                    &.onbeantwoord {
+                        background: linear-gradient(180deg, #FFF 35px,#ccc 35px);
+                    }
+
+                    .its123-label {
+                        padding-top: 28px;
+                        min-height: 0;
+
+                        .its123-counter {
+                            margin-left: 10px;
+                        }
+                    }
+
+                    .its123-likert-label {
+                        margin-bottom: 22px;
+                    }
+                }
+            }
+        }
+
+        .its123-label {
+
+            .its123-label-text {
+                font-size: 16px;
+                font-weight: 300;
+                color: $base;
+                line-height: 22px;
+                margin-top: -2px;
+            }
+
+            .its123-label-text.its123-error {
+                color: $errorColor;
+            }
+        }
+
+        @media (min-width: 768px) {
+
+            .its123-label {
+                flex-basis: 65%;
+
+                .its123-label-text {
+                }
+            }
+        }
+
+        .its123-likert-option {
+            width: auto;
+            padding: 0;
+            line-height: 100%;
+        }
+
+    }
+
+    // Utilities
+    .its123-alternate-background {
+
+        &:nth-child(odd) {
+            background-color: $item-bg-color-alternate;
+        }
+    }
+
+    .its123-alternate-background,
+    .its123-item-single-select-vertical,
+    .its123-item-multi-select-vertical,
+    .its123-item-dropdown-vertical,
+    .its123-item-freetype {
+        @extend .its123-alternate-background;
+    }
+
+    // Alerts
+    // Icons
+    // Images
+    // UI
+}
+
+.its123-instrument {
+
+    &:after {
+        visibility: hidden;
+        display: block;
+        font-size: 0;
+        content: " ";
+        clear: both;
+        height: 0;
+    }
+
+    .its123-completed .its123-counter{
+        background-color: rgb(226, 255, 226);
+        color: green;
+    }
+
+    .its123-todo .its123-counter{
+        background-color: rgb(1, 130, 169);
+        color: white;
+    }
+    .its123-error.its123-todo .its123-counter{
+        background-color: #C10000;
+        color: white;
+    }
+
+    .its123-radio {
+        width: 1.3em;
+        height: 1.2em;
+        margin: 0;
+    }
+
+}
+
+.its123-error {
+    color: $errorColor;
+}

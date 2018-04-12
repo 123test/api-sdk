@@ -4,6 +4,7 @@
     <title>123test Style instrument example</title>
 
     <link rel="stylesheet" type="text/css" href="css/themes/123test.css">
+    <link rel="stylesheet" type="text/css" href="css/themes/123test_dark.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <style type="text/css">
         body {
@@ -327,9 +328,85 @@
         <p>Items marked with a <span class="its123-required">*</span> are required.</p>
     </div>
 
+    <h3>Item multipe select (vertical)</h3>
+    <div class="its123-container">
+        <fieldset class="its123-item its123-item-multi-select-vertical">
+            <legend class="its123-legend">1. What are your interests?</legend>
+
+            <div class="its123-options">
+                <div class="its123-option">
+                    <label class="its123-label">
+                        <input type="checkbox" value="0" class="its123-checkbox">
+                        Books
+                    </label>
+                </div>
+                <div class="its123-option">
+                    <label class="its123-label">
+                        <input type="checkbox" value="1" class="its123-checkbox">
+                        Computers
+                    </label>
+                </div>
+                <div class="its123-option">
+                    <label class="its123-label">
+                        <input type="checkbox" value="3" class="its123-checkbox">
+                        Nature
+                    </label>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset class="its123-item its123-item-multi-select-vertical">
+            <legend class="its123-legend">2. What are your strenghts?</legend>
+
+            <div class="its123-options">
+                <div class="its123-option">
+                    <label class="its123-label">
+                        <input type="checkbox" value="0" class="its123-checkbox">
+                        Creativity
+                    </label>
+                </div>
+                <div class="its123-option">
+                    <label class="its123-label">
+                        <input type="checkbox" value="1" class="its123-checkbox">
+                        Curiosity
+                    </label>
+                </div>
+                <div class="its123-option">
+                    <label class="its123-label">
+                        <input type="checkbox" value="2" class="its123-checkbox">
+                        Perspective
+                    </label>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset class="its123-item its123-item-multi-select-vertical its123-error">
+            <legend class="its123-legend">2. What are your weaknesses?</legend>
+
+            <div class="its123-options">
+                <div class="its123-option">
+                    <label class="its123-label">
+                        <input type="checkbox" value="0" class="its123-checkbox">
+                        Lazy
+                    </label>
+                </div>
+                <div class="its123-option">
+                    <label class="its123-label">
+                        <input type="checkbox" value="1" class="its123-checkbox">
+                        Impatient
+                    </label>
+                </div>
+                <div class="its123-option">
+                    <label class="its123-label">
+                        <input type="checkbox" value="2" class="its123-checkbox">
+                        Stubborn
+                    </label>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+
     <h3>Item typeahead</h3>
     <div class="its123-item its123-item-typeahead its123-item-hidden its123-item-horizontal" style="margin-bottom: 100px;">
-        <label for="ts123-item-1390" class="its123-label">Wat is your profession?</label>
+        <label for="its123-item-1390" class="its123-label">Wat is your profession?</label>
 
         <div class="its123-input">
             <input name="its123-item-1390" id="its123-item-1390" type="text" autocomplete="off" class="its123-input-text" />
@@ -339,6 +416,56 @@
                 <li>Florist</li>
                 <li>Researcher</li>
             </ul>
+        </div>
+    </div>
+
+    <h3>Item freetype single-line</h3>
+    <div class="its123-container">
+        <div class="its123-item its123-item-freetype its123-alternate-background its123-item-hidden its123-item-horizontal">
+            <label for="its123-item-1400" class="its123-label">Wat is your age?</label>
+
+            <div class="its123-input">
+                <input name="its123-item-1400" id="its123-item-1400" type="text" autocomplete="off" class="its123-input-text" />
+            </div>
+        </div>
+        <div class="its123-item its123-item-freetype its123-alternate-background its123-item-hidden its123-item-horizontal">
+            <label for="its123-item-1410" class="its123-label">Wat is your profession?</label>
+
+            <div class="its123-input">
+                <input name="its123-item-1410" id="its123-item-1410" type="text" autocomplete="off" class="its123-input-text" />
+            </div>
+        </div>
+        <div class="its123-item its123-item-freetype its123-alternate-background its123-item-hidden its123-item-horizontal its123-error">
+            <label for="its123-item-1420" class="its123-label">Wat is your education level?</label>
+
+            <div class="its123-input">
+                <input name="its123-item-1420" id="its123-item-1420" type="text" autocomplete="off" class="its123-input-text" />
+            </div>
+        </div>
+    </div>
+
+    <h3>Item freetype multi-line</h3>
+    <div class="its123-container">
+        <div class="its123-item its123-item-freetype its123-alternate-background its123-item-hidden its123-item-horizontal">
+            <label for="its123-item-1430" class="its123-label">Wat is your opinion?</label>
+
+            <div class="its123-input">
+                <textarea name="its123-item-1430" id="its123-item-1430" type="text" rows="5" class="its123-input-textarea"></textarea>
+            </div>
+        </div>
+        <div class="its123-item its123-item-freetype its123-alternate-background its123-item-hidden its123-item-horizontal">
+            <label for="its123-item-1440" class="its123-label">Wat is your feedback?</label>
+
+            <div class="its123-input">
+                <textarea name="its123-item-1440" id="its123-item-1440" type="text" rows="5" class="its123-input-textarea"></textarea>
+            </div>
+        </div>
+        <div class="its123-item its123-item-freetype its123-alternate-background its123-item-hidden its123-item-horizontal its123-error">
+            <label for="its123-item-1450" class="its123-label">Wat is your recommendation?</label>
+
+            <div class="its123-input">
+                <textarea name="its123-item-1450" id="its123-item-1450" type="text" rows="5" class="its123-input-textarea"></textarea>
+            </div>
         </div>
     </div>
 
@@ -397,6 +524,102 @@
         </fieldset>
     </div>
 
+    <h3>Item Likert 4</h3>
+    <div class="its123-container">
+
+        <div class="its123-likert">
+            <div class="its123-item">
+                <label class="its123-label">
+                    <div class="its123-counter">1.</div>
+                    <div class="its123-label-text">I believe that people basically have good intentions</div>
+                </label>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-1">--</label>
+                    <input type="radio" value="1" id="likert-1-1" class="its123-radio">
+                </div>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-2">-</label>
+                    <input type="radio" value="2" id="likert-1-2" class="its123-radio">
+                </div>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-3">+</label>
+                    <input type="radio" value="3" id="likert-1-3" class="its123-radio">
+                </div>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-4">++</label>
+                    <input type="radio" value="4" id="likert-1-4" class="its123-radio">
+                </div>
+            </div>
+            <div class="its123-item">
+                <label class="its123-label">
+                    <div class="its123-counter">1.</div>
+                    <div class="its123-label-text">Let goed op de gevolgen om te zien of de gekozen aanpak voor herhaling vatbaar is.
+                    </div>
+                </label>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-1">--</label>
+                    <input type="radio" value="1" id="likert-1-1" class="its123-radio">
+                </div>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-2">-</label>
+                    <input type="radio" value="2" id="likert-1-2" class="its123-radio">
+                </div>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-3">+</label>
+                    <input type="radio" value="3" id="likert-1-3" class="its123-radio">
+                </div>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-4">++</label>
+                    <input type="radio" value="4" id="likert-1-4" class="its123-radio">
+                </div>
+            </div>
+            <div class="its123-item its123-error">
+                <label class="its123-label">
+                    <div class="its123-counter">1.</div>
+                    <div class="its123-label-text">I believe that </div>
+                </label>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-1">--</label>
+                    <input type="radio" value="1" id="likert-1-1" class="its123-radio">
+                </div>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-2">-</label>
+                    <input type="radio" value="2" id="likert-1-2" class="its123-radio">
+                </div>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-3">+</label>
+                    <input type="radio" value="3" id="likert-1-3" class="its123-radio">
+                </div>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-4">++</label>
+                    <input type="radio" value="4" id="likert-1-4" class="its123-radio">
+                </div>
+            </div>
+            <div class="its123-item its123-error">
+                <label class="its123-label">
+                    <div class="its123-counter">1.</div>
+                    <div class="its123-label-text">I believe that </div>
+                </label>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-1">--</label>
+                    <input type="radio" value="1" id="likert-1-1" class="its123-radio">
+                </div>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-2">-</label>
+                    <input type="radio" value="2" id="likert-1-2" class="its123-radio">
+                </div>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-3">+</label>
+                    <input type="radio" value="3" id="likert-1-3" class="its123-radio">
+                </div>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-4">++</label>
+                    <input type="radio" value="4" id="likert-1-4" class="its123-radio">
+                </div>
+            </div>
+        </div>
+    </div>
+
     <h3>Item Likert 5</h3>
     <div class="its123-container">
 
@@ -430,18 +653,134 @@
             <div class="its123-item">
                 <label class="its123-label">
                     <div class="its123-counter">1.</div>
+                    <div class="its123-label-text">Let goed op de gevolgen om te zien of de gekozen aanpak voor herhaling vatbaar is.</div>
+                </label>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-1">--</label>
+                    <input type="radio" value="1" id="likert-1-1" class="its123-radio">
+                </div>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-2">-</label>
+                    <input type="radio" value="2" id="likert-1-2" class="its123-radio">
+                </div>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-3">-/+</label>
+                    <input type="radio" value="3" id="likert-1-3" class="its123-radio">
+                </div>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-4">+</label>
+                    <input type="radio" value="4" id="likert-1-4" class="its123-radio">
+                </div>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-5">++</label>
+                    <input type="radio" value="5" id="likert-1-5" class="its123-radio">
+                </div>
+            </div>
+            <div class="its123-item its123-error">
+                <label class="its123-label">
+                    <div class="its123-counter">1.</div>
+                    <div class="its123-label-text">I believe that </div>
+                </label>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-1">--</label>
+                    <input type="radio" value="1" id="likert-1-1" class="its123-radio">
+                </div>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-2">-</label>
+                    <input type="radio" value="2" id="likert-1-2" class="its123-radio">
+                </div>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-3">-/+</label>
+                    <input type="radio" value="3" id="likert-1-3" class="its123-radio">
+                </div>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-4">+</label>
+                    <input type="radio" value="4" id="likert-1-4" class="its123-radio">
+                </div>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-5">++</label>
+                    <input type="radio" value="5" id="likert-1-5" class="its123-radio">
+                </div>
+            </div>
+            <div class="its123-item its123-error">
+                <label class="its123-label">
+                    <div class="its123-counter">1.</div>
+                    <div class="its123-label-text">I believe that </div>
+                </label>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-1">--</label>
+                    <input type="radio" value="1" id="likert-1-1" class="its123-radio">
+                </div>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-2">-</label>
+                    <input type="radio" value="2" id="likert-1-2" class="its123-radio">
+                </div>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-3">-/+</label>
+                    <input type="radio" value="3" id="likert-1-3" class="its123-radio">
+                </div>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-4">+</label>
+                    <input type="radio" value="4" id="likert-1-4" class="its123-radio">
+                </div>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-5">++</label>
+                    <input type="radio" value="5" id="likert-1-5" class="its123-radio">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3>Item Likert 6</h3>
+    <div class="its123-container">
+
+        <div class="its123-likert">
+            <div class="its123-item">
+                <label class="its123-label">
+                    <div class="its123-counter">1.</div>
+                    <div class="its123-label-text">I believe that people basically have good intentions</div>
+                </label>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-1">---</label>
+                    <input type="radio" value="1" id="likert-1-1" class="its123-radio">
+                </div>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-2">--</label>
+                    <input type="radio" value="2" id="likert-1-2" class="its123-radio">
+                </div>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-3">-</label>
+                    <input type="radio" value="3" id="likert-1-3" class="its123-radio">
+                </div>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-4">+</label>
+                    <input type="radio" value="4" id="likert-1-4" class="its123-radio">
+                </div>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-5">++</label>
+                    <input type="radio" value="5" id="likert-1-5" class="its123-radio">
+                </div>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-6">+++</label>
+                    <input type="radio" value="6" id="likert-1-6" class="its123-radio">
+                </div>
+            </div>
+            <div class="its123-item">
+                <label class="its123-label">
+                    <div class="its123-counter">1.</div>
                     <div class="its123-label-text">Let goed op de gevolgen om te zien of de gekozen aanpak voor herhaling vatbaar is.
-</div>
-                </label>                <div class="its123-likert-option">
-                    <label class="its123-likert-label" for="likert-1-1">--</label>
+                    </div>
+                </label>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-1">---</label>
                     <input type="radio" value="1" id="likert-1-1" class="its123-radio">
                 </div>
                 <div class="its123-likert-option">
-                    <label class="its123-likert-label" for="likert-1-2">-</label>
+                    <label class="its123-likert-label" for="likert-1-2">--</label>
                     <input type="radio" value="2" id="likert-1-2" class="its123-radio">
                 </div>
                 <div class="its123-likert-option">
-                    <label class="its123-likert-label" for="likert-1-3">-/+</label>
+                    <label class="its123-likert-label" for="likert-1-3">-</label>
                     <input type="radio" value="3" id="likert-1-3" class="its123-radio">
                 </div>
                 <div class="its123-likert-option">
@@ -451,22 +790,27 @@
                 <div class="its123-likert-option">
                     <label class="its123-likert-label" for="likert-1-5">++</label>
                     <input type="radio" value="5" id="likert-1-5" class="its123-radio">
+                </div>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-6">+++</label>
+                    <input type="radio" value="6" id="likert-1-6" class="its123-radio">
                 </div>
             </div>
             <div class="its123-item its123-error">
                 <label class="its123-label">
                     <div class="its123-counter">1.</div>
                     <div class="its123-label-text">I believe that </div>
-                </label>                <div class="its123-likert-option">
-                    <label class="its123-likert-label" for="likert-1-1">--</label>
+                </label>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-1">---</label>
                     <input type="radio" value="1" id="likert-1-1" class="its123-radio">
                 </div>
                 <div class="its123-likert-option">
-                    <label class="its123-likert-label" for="likert-1-2">-</label>
+                    <label class="its123-likert-label" for="likert-1-2">--</label>
                     <input type="radio" value="2" id="likert-1-2" class="its123-radio">
                 </div>
                 <div class="its123-likert-option">
-                    <label class="its123-likert-label" for="likert-1-3">-/+</label>
+                    <label class="its123-likert-label" for="likert-1-3">-</label>
                     <input type="radio" value="3" id="likert-1-3" class="its123-radio">
                 </div>
                 <div class="its123-likert-option">
@@ -476,22 +820,27 @@
                 <div class="its123-likert-option">
                     <label class="its123-likert-label" for="likert-1-5">++</label>
                     <input type="radio" value="5" id="likert-1-5" class="its123-radio">
+                </div>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-6">+++</label>
+                    <input type="radio" value="6" id="likert-1-6" class="its123-radio">
                 </div>
             </div>
             <div class="its123-item its123-error">
                 <label class="its123-label">
                     <div class="its123-counter">1.</div>
                     <div class="its123-label-text">I believe that </div>
-                </label>                <div class="its123-likert-option">
-                    <label class="its123-likert-label" for="likert-1-1">--</label>
+                </label>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-1">---</label>
                     <input type="radio" value="1" id="likert-1-1" class="its123-radio">
                 </div>
                 <div class="its123-likert-option">
-                    <label class="its123-likert-label" for="likert-1-2">-</label>
+                    <label class="its123-likert-label" for="likert-1-2">--</label>
                     <input type="radio" value="2" id="likert-1-2" class="its123-radio">
                 </div>
                 <div class="its123-likert-option">
-                    <label class="its123-likert-label" for="likert-1-3">-/+</label>
+                    <label class="its123-likert-label" for="likert-1-3">-</label>
                     <input type="radio" value="3" id="likert-1-3" class="its123-radio">
                 </div>
                 <div class="its123-likert-option">
@@ -501,6 +850,10 @@
                 <div class="its123-likert-option">
                     <label class="its123-likert-label" for="likert-1-5">++</label>
                     <input type="radio" value="5" id="likert-1-5" class="its123-radio">
+                </div>
+                <div class="its123-likert-option">
+                    <label class="its123-likert-label" for="likert-1-6">+++</label>
+                    <input type="radio" value="6" id="likert-1-6" class="its123-radio">
                 </div>
             </div>
         </div>

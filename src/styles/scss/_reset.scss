@@ -213,6 +213,7 @@
   /**
    * 1. Change the font styles in all browsers (opinionated).
    * 2. Remove the margin in Firefox and Safari.
+   * 3. Generic widths w/ box-sizing, paddings included
    */
 
   button,
@@ -224,6 +225,7 @@
     font-size: 100%; /* 1 */
     line-height: 1.15; /* 1 */
     margin: 0; /* 2 */
+    box-sizing: border-box; /* 3 */
   }
 
   /**

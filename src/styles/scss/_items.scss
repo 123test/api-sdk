@@ -16,7 +16,7 @@ legend.its123-legend {
   line-height: $font-line-height-item;
   padding: $item-padding;
 
-  .its123-option-select, .its123-input-text {
+  .its123-option-select, .its123-input-text, .its123-input-textarea {
 
     display: block;
     font-size: $font-size-item;
@@ -39,7 +39,14 @@ legend.its123-legend {
   }
   .its123-input-text {
     padding-left: 10px;
+    padding-right: 10px;
     height: 30px;
+    @include media-breakpoint-up(md) {
+      width: 260px;
+    }
+  }
+  .its123-input-textarea {
+    padding: 10px;
     @include media-breakpoint-up(md) {
       width: 260px;
     }
@@ -69,7 +76,8 @@ legend.its123-legend {
 }
 
 // Single select radio buttons, vertical
-.its123-item-single-select-vertical {
+.its123-item-single-select-vertical,
+.its123-item-multi-select-vertical {
   @extend .its123-alternate-background;
 
   .its123-option {
@@ -543,6 +551,21 @@ legend.its123-legend {
     }
   }
 }
+
+// Freetype item
+.its123-item-freetype {
+  @extend .its123-alternate-background;
+
+  .its123-label {
+    display: block;
+    margin-bottom: 15px;
+  }
+  &.its123-error {
+    border: 1px solid $error-border-color;
+    border-radius: $border-radius;
+  }
+}
+
 
 .its123-matrices-container {
 
