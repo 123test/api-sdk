@@ -214,6 +214,25 @@ legend.its123-legend {
   }
 }
 
+// Single select with radio buttons and images (horizontal)
+.its123-item-horizontal-images {
+
+  .its123-options {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .its123-option {
+    flex: 1 0 auto;
+    min-width: 100px;
+
+    img {
+      vertical-align: middle;
+    }
+  }
+}
+
 // Likert tables
 .its123-likert {
 
@@ -566,7 +585,7 @@ legend.its123-legend {
   }
 }
 
-
+// Matrices item
 .its123-matrices-container {
 
   .its123-matrices-bg {
