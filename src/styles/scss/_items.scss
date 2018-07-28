@@ -220,7 +220,10 @@ legend.its123-legend {
   img {
     max-width: 100%;
   }
-
+  input[type="radio"] {
+    margin-right: 10px;
+    padding: 5px;
+  }
   .its123-options {
     display: flex;
     flex-wrap: wrap;
@@ -249,11 +252,23 @@ legend.its123-legend {
   img {
     max-width: 100%;
   }
-
+  input[type="radio"] {
+    margin-right: 10px;
+    padding: 5px;
+  }
   .its123-question {
     flex: 1 1 auto;
     width: 100%;
     text-align: center;
+
+    img {
+      vertical-align: top;
+      padding-left: 15px;
+    }
+
+    .its123-counter {
+      font-size: 2em;
+    }
   }
   .its123-options {
     flex: 1 1 auto;
