@@ -58,6 +58,8 @@ const defaultApiConfig = {
     productElementId: 'its123api-product',
     // ID for the report div
     reportElementId: 'its123api-report',
+    // ID for the prefetch resource
+    prefetchResourceElementId: 'its123api-prefetch-resource-data',
 
     // Internal placeholders for the DOM elements, do not set these to any values
     loadingElement: null,
@@ -113,6 +115,8 @@ class Its123 {
     this.api.elements.loadingElement = document.getElementById(this.api.elements.loadingElementId);
     this.api.elements.productElement = document.getElementById(this.api.elements.productElementId);
     this.api.elements.reportElement = document.getElementById(this.api.elements.reportElementId);
+    this.api.elements.prefetchResourceElement = document.getElementById(this.api.elements.prefetchResourceElementId);
+
     if (!this.api.elements.loadingElement
       || !this.api.elements.productElement || !this.api.elements.reportElement) {
       throw new Error(
@@ -157,6 +161,15 @@ class Its123 {
    * @see loadAndRunProduct()
    */
   async prefetchProduct(productId, { renderReport = true, user = '' } = {}) {
+
+    // Load prefetched resource data
+    if(this.api.elements.prefetchResourceElement)
+    {
+      const resources = JSON.parse(atob(this.api.elements.prefetchResourceElement.value));
+      await Its123.loadResources(resources);
+      await this.runResourceFunctions(resources);
+    }
+
     // First check for existing run in storage
     const product = this.store.loadProduct(productId, user);
 
