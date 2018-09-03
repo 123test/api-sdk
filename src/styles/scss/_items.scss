@@ -272,7 +272,7 @@ legend.its123-legend {
 
   .its123-likert-label {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 18px;
     color: $color-secondary;
 
     @include media-breakpoint-up(md) {
@@ -285,8 +285,8 @@ legend.its123-legend {
       .its123-label {
         display: block;
         margin-top: 10px;
-        padding-top: 10px;
-        min-height: 50px;
+        padding-top: 20px;
+        min-height: 40px;
         border-top: $item-border;
       }
     }
