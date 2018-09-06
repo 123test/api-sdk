@@ -485,8 +485,8 @@ legend.its123-legend {
   .its123-typeahead-list {
     border-radius: .3em;
     margin: .2em 0 0;
-    background: hsla(0,0%,100%,.9);
-    background: linear-gradient(to bottom right, white, hsla(0,0%,100%,.8));
+    background: hsla(0,0%,100%,1);
+    background: linear-gradient(to bottom right, white, hsla(0,0%,100%,1));
     border: $item-border;
     box-shadow: .05em .2em .6em rgba(0,0,0,.2);
     text-shadow: none;
