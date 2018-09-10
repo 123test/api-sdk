@@ -321,7 +321,7 @@ legend.its123-legend {
 
   @include media-breakpoint-up(md) {
     .its123-thumbs {
-      flex-basis: 35%;
+      flex-basis: 40%;
     }
   }
 }
@@ -334,10 +334,9 @@ legend.its123-legend {
   padding: 10px;
 
   @include media-breakpoint-up(md) {
-    margin: 20px;
+    margin-right: 20px;
     padding: 20px;
   }
-
 
   .its123-label {
     display: inline-block;
