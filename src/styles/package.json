@@ -7,7 +7,6 @@
     "build": "node-sass scss --output-style compressed --output css",
     "minify": "node-sass scss --output-style compressed --output ../../dist/css && postcss --no-map.inline --use autoprefixer --replace ../../dist/css/themes/*.css",
     "watch": "node-sass --watch scss --output css",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "server": "browser-sync start --server --files='index.html,css/**/*.css'"
   },
   "repository": {
@@ -18,8 +17,8 @@
   "license": "MIT",
   "private": true,
   "devDependencies": {
-    "autoprefixer": "^6.5.3",
-    "node-sass": "^3.11.2",
-    "postcss-cli": "^2.6.0"
+    "autoprefixer": "^9.6.0",
+    "node-sass": "^4.12.0",
+    "postcss-cli": "^6.1.2"
   }
 }
