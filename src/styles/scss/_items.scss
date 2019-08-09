@@ -306,9 +306,7 @@ legend.its123-legend {
 .its123-likert {
 
   .its123-item {
-    padding: 10px 10px 20px 10px;
-    margin-bottom: 10px;
-    min-height: 40px;
+    padding: 25px 10px;
 
     display: flex;
     flex-direction: row;
@@ -318,9 +316,7 @@ legend.its123-legend {
     align-content: flex-start;
 
     @include media-breakpoint-up(md) {
-      margin-bottom: 0;
-      padding: 8px 0 8px 0;
-
+      padding: 13px 10px;
       border: 0;
     }
 
@@ -384,18 +380,17 @@ legend.its123-legend {
       .its123-label {
         display: block;
         margin-top: 10px;
-        padding-top: 20px;
-        min-height: 40px;
+        padding-top: 28px;
         border-top: $item-border;
+      }
+
+      background: linear-gradient(180deg,#FFF 35px, $item-bg-color-alternate-light 35px);
+      &:hover {
+        background: linear-gradient(180deg,#FFF 35px, darken($item-bg-color-alternate-light, 3%) 35px);
       }
     }
     .its123-likert-label {
       display: block;
-    }
-
-    background: linear-gradient(180deg,#FFF 35px, $item-bg-color-alternate-light 35px);
-    &:hover {
-      background: linear-gradient(180deg,#FFF 35px, darken($item-bg-color-alternate-light, 3%) 35px);
     }
   }
 
