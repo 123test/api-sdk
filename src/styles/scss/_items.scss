@@ -323,6 +323,10 @@ legend.its123-legend {
 
       border: 0;
     }
+
+    &:hover {
+      background-color: $item-bg-color-alternate-light;
+    }
   }
 
   .its123-counter {
@@ -368,6 +372,13 @@ legend.its123-legend {
     }
   }
 
+  .its123-item:nth-child(2n+1) {
+    background-color: $item-bg-color-alternate-light;
+    &:hover {
+      background-color: darken($item-bg-color-alternate-light, 3%);
+    }
+  }
+
   .its123-item:nth-child(10n+1) {
     @include media-breakpoint-up(md) {
       .its123-label {
@@ -380,6 +391,11 @@ legend.its123-legend {
     }
     .its123-likert-label {
       display: block;
+    }
+
+    background: linear-gradient(180deg,#FFF 35px, $item-bg-color-alternate-light 35px);
+    &:hover {
+      background: linear-gradient(180deg,#FFF 35px, darken($item-bg-color-alternate-light, 3%) 35px);
     }
   }
 
@@ -395,6 +411,7 @@ legend.its123-legend {
   .its123-radio {
     width: 1.2em;
     height: 1.2em;
+    cursor: pointer;
   }
 }
 // Thumbs
