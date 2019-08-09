@@ -150,9 +150,49 @@ legend.its123-legend {
 
   .its123-item {
     display: table-row-group;
+
+    &:nth-child(2n+1) {
+      background-color: $item-bg-color-alternate-light;
+    }
   }
   .its123-options {
     display: table-row;
+
+    // Align number
+    &> .its123-label {
+      vertical-align: middle;
+      display: inline-block;
+      margin-bottom: 0;
+
+      @include media-breakpoint-down(md) {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 10px 0 0;
+      }
+    }
+  }
+
+  // Options row is used to group item options
+  .its123-options-row {
+    display: inline-block;
+
+    width: 100%;
+    @include media-breakpoint-up(md) {
+      width: calc(100% - 40px);
+    }
+
+    box-sizing: border-box;
+    vertical-align: middle;
+
+    // For single-select with numbers we force the two options to the center
+    .its123-option {
+      float: left;
+      width: 50%;
+      box-sizing: border-box;
+      padding: 10px 5px;
+      word-break: break-all;
+    }
   }
   .its123-option {
     display: table-cell;
@@ -179,6 +219,23 @@ legend.its123-legend {
     }
     &:last-child {
       border-left: 0;
+    }
+  }
+
+  .its123-counter {
+    background-color: lighten($color-secondary, 60%);
+    color: $color-secondary;
+    border-radius: 7px;
+    font-size: 12px;
+    line-height: 19px;
+    width: 30px;
+    height: 18px;
+    margin-right: 10px;
+    display: inline-block;
+    text-align: center;
+    @include media-breakpoint-up(md) {
+      float: left;
+      margin-right: 10px;
     }
   }
 }
