@@ -214,13 +214,99 @@ legend.its123-legend {
   }
 }
 
+// Single select with radio buttons and images (horizontal)
+.its123-item-horizontal-images {
+
+  img {
+    max-width: 100%;
+  }
+  input[type="radio"] {
+    margin-right: 10px;
+    padding: 5px;
+  }
+  .its123-options {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-evenly;
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  .its123-option {
+    flex: 0 1 20%;
+    min-width: 100px;
+    margin-bottom: 10px;
+
+    img {
+      vertical-align: middle;
+      cursor: pointer;
+    }
+  }
+}
+
+// Single select with radio buttons and images (square)
+.its123-item-horizontal-images-square {
+  display: flex;
+  flex-wrap: wrap;
+
+  img {
+    max-width: 100%;
+  }
+  input[type="radio"] {
+    margin-right: 10px;
+    padding: 5px;
+  }
+  .its123-question {
+    flex: 1 1 auto;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+
+    img {
+      vertical-align: top;
+      padding-left: 10px;
+    }
+
+    .its123-counter {
+      font-size: 2em;
+    }
+  }
+  .its123-options {
+    flex: 1 1 auto;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .its123-option {
+    text-align: center;
+  }
+
+  @include media-breakpoint-up(md) {
+    .its123-question {
+      width: 50%;
+    }
+    .its123-options {
+      width: 50%;
+    }
+  }
+
+  .its123-option {
+    flex: 0 1 50%;
+
+    img {
+      vertical-align: middle;
+      cursor: pointer;
+    }
+  }
+}
+
 // Likert tables
 .its123-likert {
 
   .its123-item {
-    padding: 10px 10px 20px 10px;
-    margin-bottom: 10px;
-    min-height: 40px;
+    padding: 25px 10px;
 
     display: flex;
     flex-direction: row;
@@ -230,10 +316,12 @@ legend.its123-legend {
     align-content: flex-start;
 
     @include media-breakpoint-up(md) {
-      margin-bottom: 0;
-      padding: 8px 0 8px 0;
-
+      padding: 13px 10px;
       border: 0;
+    }
+
+    &:hover {
+      background-color: $item-bg-color-alternate-light;
     }
   }
 
@@ -280,14 +368,25 @@ legend.its123-legend {
     }
   }
 
+  .its123-item:nth-child(2n+1) {
+    background-color: $item-bg-color-alternate-light;
+    &:hover {
+      background-color: darken($item-bg-color-alternate-light, 3%);
+    }
+  }
+
   .its123-item:nth-child(10n+1) {
     @include media-breakpoint-up(md) {
       .its123-label {
         display: block;
         margin-top: 10px;
-        padding-top: 20px;
-        min-height: 40px;
+        padding-top: 28px;
         border-top: $item-border;
+      }
+
+      background: linear-gradient(180deg,#FFF 35px, $item-bg-color-alternate-light 35px);
+      &:hover {
+        background: linear-gradient(180deg,#FFF 35px, darken($item-bg-color-alternate-light, 3%) 35px);
       }
     }
     .its123-likert-label {
@@ -307,6 +406,7 @@ legend.its123-legend {
   .its123-radio {
     width: 1.2em;
     height: 1.2em;
+    cursor: pointer;
   }
 }
 // Thumbs
@@ -342,6 +442,7 @@ legend.its123-legend {
     display: inline-block;
     vertical-align: middle;
     padding: 5px 6px;
+    cursor: pointer;
   }
 
   .its123-thumbs-text {
@@ -567,7 +668,7 @@ legend.its123-legend {
   }
 }
 
-
+// Matrices item
 .its123-matrices-container {
 
   .its123-matrices-bg {
