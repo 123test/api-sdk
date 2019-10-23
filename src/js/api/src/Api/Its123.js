@@ -168,6 +168,7 @@ class Its123 {
   async prefetchProduct(productId, { renderReport = true, user = '' } = {}) {
 
     // Load prefetched resource data
+    this.api.epochStart = this.currentEpochTime();
     if(this.api.elements.prefetchResourceElement)
     {
       const resources = JSON.parse(atob(this.api.elements.prefetchResourceElement.value));
