@@ -18,12 +18,16 @@ module.exports = {
   // Add sourcemap to output
   devtool: 'source-map',
 
+
   // Output path after webpack has run
   output: {
     path: outputDir,
     filename: (isDist) ? '[name].min.js' : '[name].js',
   },
-
+  devServer: {
+      compress: true,
+      disableHostCheck: true,
+  },
   module: {
     // Load all js files and convert them using babel
     loaders: [
