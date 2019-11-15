@@ -409,7 +409,7 @@ class Its123 {
         this.log('error', `123test API Server error: Unknown api instrument response status '${status}'.`);
         this.triggerEvent('instrument-submit-failed', null, 'error');
 
-        // Call itself, using the same accesscode. This enables waiting for a new for sjbmit.
+        // Call itself, using the same accesscode. This enables waiting for a new for submit.
         return await this.processApiInstrumentResponse(accessCode,
           await this.processFormSubmit(accessCode),
         );
