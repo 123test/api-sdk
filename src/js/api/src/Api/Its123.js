@@ -406,7 +406,8 @@ class Its123 {
         this.enableSubmitButton();
 
         // Throw an error so that the UI can show an error message.
-        this.handleException('api-response', new Error(`Unexpected instrument status '${status}'`));
+        this.log('error', `123test API Server error: Unknown api instrument response status '${status}'.`);
+        this.triggerEvent('instrument-submit-failed', null, 'error');
 
         // Call itself, using the same accesscode. This enables waiting for a new for sjbmit.
         return await this.processApiInstrumentResponse(accessCode,
