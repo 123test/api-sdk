@@ -262,7 +262,6 @@ class Its123 {
         await tryAtMost(this.api.maxHttpRetries, this.api.retryDelay, () =>
           this.requestProduct(productId, user),
       );
-      // product = await this.requestProduct(productId, user);
 
       // Store the requested product in the local store for future requests
       this.store.saveProduct(productId, product, user);
