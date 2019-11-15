@@ -401,7 +401,17 @@ class Its123 {
         this.triggerEvent('instrument-completed', { accessCode, status });
         break;
       default:
-        throw new Error(`Unexpected instrument status ${status}`);
+        // This is an unrecoverable error due to an unknown API response.
+        // The submit buttion is renabled, the user can then try to submit at a later stage.
+        this.enableSubmitButton();
+
+        // Throw an error so that the UI can show an error message.
+        this.handleException('api-response', new Error(`Unexpected instrument status '${status}'`));
+
+        // Call itself, using the same accesscode. This enables waiting for a new for sjbmit.
+        return await this.processApiInstrumentResponse(accessCode,
+          await this.processFormSubmit(accessCode),
+        );
     }
 
     return {};
@@ -554,16 +564,12 @@ class Its123 {
    */
   waitForInstrumentToSubmit() {
     const className = 'its123-disabled-loading';
-    const loadingIcon = '<div class="its123-loading-spinner"><div></div><div></div><div></div></div>';
     const form = document.querySelector(this.api.elements.instrumentFormSelector);
     const button = form.querySelector('button[type=submit]');
 
     // Re-enable button if it was previously disabled by this function
     if (button.classList.contains(className)) {
-      button.disabled = false;
-      button.innerHTML = (button.getAttribute('data-label')) ?
-        button.getAttribute('data-label') : button.innerText;
-      button.classList.remove(className);
+      this.enableSubmitButton();
     }
 
     // Return a new promise that resolves when the submit button is clicked
@@ -573,19 +579,49 @@ class Its123 {
 
         // Disable submit button and add class so that we know that
         // the api js disabled the button (and not individual instrument js)
-        button.disabled = true;
-        button.classList.add(className);
-        // Save content to an attribute to reset it later
-        if (!button.getAttribute('data-label')) {
-          button.setAttribute('data-label', button.innerText);
-        }
-        button.innerHTML = loadingIcon;
+        this.disableSubmitButton();
 
         resolve({ form, event });
       });
     });
   }
 
+  /**
+   * Enable the submit button.
+   * @return {void}
+   */
+  enableSubmitButton() {
+    const className = 'its123-disabled-loading';
+    const formEl = document.querySelector(this.api.elements.instrumentFormSelector);
+    const button = formEl.querySelector('button[type=submit]');
+
+    // Re-enable button if it was previously disabled
+    if (button.classList.contains(className)) {
+      button.disabled = false;
+      button.innerHTML = (button.getAttribute('data-label')) ?
+        button.getAttribute('data-label') : button.innerText;
+      button.classList.remove(className);
+    }
+  }
+
+  /**
+   * Disable the submit button.
+   * @return {void}
+   */
+  disableSubmitButton() {
+    const className = 'its123-disabled-loading';
+    const loadingIcon = '<div class="its123-loading-spinner"><div></div><div></div><div></div></div>';
+    const form = document.querySelector(this.api.elements.instrumentFormSelector);
+    const button = form.querySelector('button[type=submit]');
+
+    button.disabled = true;
+    button.classList.add(className);
+    // Save content to an attribute to reset it later
+    if (!button.getAttribute('data-label')) {
+      button.setAttribute('data-label', button.innerText);
+    }
+    button.innerHTML = loadingIcon;
+  }
   /**
    * Submit a form to the API for a given instrument
    * @param  {String} accessCode Access code of the instrument
@@ -606,7 +642,6 @@ class Its123 {
         'X-123test-epochEnd': Its123.currentEpochTime(),
       },
     });
-
 
     const body = await response.text();
 
@@ -830,7 +865,7 @@ class Its123 {
     }
 
     // Trigger that a unhandled exception has occurred
-    this.log('error', `123test API Server error: Error Unknown, ${param}`);
+    this.log('error', `123test API Server error: Error Unknown, '${e.message}', parameters: '${param}'`);
     this.triggerEvent('api-unavailable', e, 'error');
   }
 
