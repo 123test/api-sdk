@@ -119,7 +119,8 @@ class Its123 {
     this.api.elements.loadingElement = document.getElementById(this.api.elements.loadingElementId);
     this.api.elements.productElement = document.getElementById(this.api.elements.productElementId);
     this.api.elements.reportElement = document.getElementById(this.api.elements.reportElementId);
-    this.api.elements.prefetchResourceElement = document.getElementById(this.api.elements.prefetchResourceElementId);
+    this.api.elements.prefetchResourceElement = document.getElementById(
+      this.api.elements.prefetchResourceElementId);
 
     if (!this.api.elements.loadingElement
       || !this.api.elements.productElement || !this.api.elements.reportElement) {
@@ -166,11 +167,9 @@ class Its123 {
    * @see loadAndRunProduct()
    */
   async prefetchProduct(productId, { renderReport = true, user = '' } = {}) {
-
     // Load prefetched resource data
     this.api.epochStart = this.currentEpochTime();
-    if(this.api.elements.prefetchResourceElement)
-    {
+    if (this.api.elements.prefetchResourceElement) {
       const resources = JSON.parse(atob(this.api.elements.prefetchResourceElement.value));
       await Its123.loadResources(resources);
       await this.runResourceFunctions(resources);
@@ -601,7 +600,7 @@ class Its123 {
         'X-123test-ApiKey': this.api.apiKey,
         'X-123test-InstrumentRun': accessCode,
         'X-123test-epochStart': this.api.epochStart,
-        'X-123test-epochEnd': this.currentEpochTime()
+        'X-123test-epochEnd': this.currentEpochTime(),
       },
     });
 
@@ -890,10 +889,14 @@ class Its123 {
     }
   }
 
-  currentEpochTime() {
-      const now = new Date()
-      const epoch = Math.round(now.getTime() / 1000);
-      return epoch;
+  /**
+   * Return current time in seconds.
+   * @return {Number} Time in seconds
+   */
+  static currentEpochTime() {
+    const now = new Date();
+    const epoch = Math.round(now.getTime() / 1000);
+    return epoch;
   }
 
   /**
