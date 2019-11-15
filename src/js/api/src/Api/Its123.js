@@ -83,6 +83,10 @@ const defaultApiConfig = {
 
   // loaded product ID
   productId: 'not-set',
+
+  // Epoch time user
+  epochStart: null,
+  epochCompleted: null,
 };
 
 /**
@@ -141,6 +145,7 @@ class Its123 {
    */
   async loadProduct(productId, { renderReport = true, user = '' } = {}) {
     try {
+      this.api.epochStart = this.currentEpochTime();
       this.api.productId = productId;
       return await this.loadAndRunProduct(productId, { renderReport, user });
     } catch (error) {
@@ -163,6 +168,7 @@ class Its123 {
   async prefetchProduct(productId, { renderReport = true, user = '' } = {}) {
 
     // Load prefetched resource data
+    this.api.epochStart = this.currentEpochTime();
     if(this.api.elements.prefetchResourceElement)
     {
       const resources = JSON.parse(atob(this.api.elements.prefetchResourceElement.value));
@@ -368,6 +374,7 @@ class Its123 {
         );
       case 'started':
       case 'in-progress':
+        this.api.epochStart = this.currentEpochTime();
         this.store.saveInstrumentStatus(accessCode, status);
 
         // Wait for resources to load
@@ -593,8 +600,11 @@ class Its123 {
       headers: {
         'X-123test-ApiKey': this.api.apiKey,
         'X-123test-InstrumentRun': accessCode,
+        'X-123test-epochStart': this.api.epochStart,
+        'X-123test-epochEnd': this.currentEpochTime()
       },
     });
+
 
     const body = await response.text();
 
@@ -878,6 +888,12 @@ class Its123 {
         }
         break;
     }
+  }
+
+  currentEpochTime() {
+      const now = new Date()
+      const epoch = Math.round(now.getTime() / 1000);
+      return epoch;
   }
 
   /**
