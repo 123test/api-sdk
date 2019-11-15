@@ -146,7 +146,7 @@ class Its123 {
    */
   async loadProduct(productId, { renderReport = true, user = '' } = {}) {
     try {
-      this.api.epochStart = this.currentEpochTime();
+      this.api.epochStart = Its123.currentEpochTime();
       this.api.productId = productId;
       return await this.loadAndRunProduct(productId, { renderReport, user });
     } catch (error) {
@@ -168,7 +168,7 @@ class Its123 {
    */
   async prefetchProduct(productId, { renderReport = true, user = '' } = {}) {
     // Load prefetched resource data
-    this.api.epochStart = this.currentEpochTime();
+    this.api.epochStart = Its123.currentEpochTime();
     if (this.api.elements.prefetchResourceElement) {
       const resources = JSON.parse(atob(this.api.elements.prefetchResourceElement.value));
       await Its123.loadResources(resources);
@@ -258,7 +258,11 @@ class Its123 {
     product = this.store.loadProduct(productId, user);
 
     if (!product) {
-      product = await this.requestProduct(productId, user);
+      product =
+        await tryAtMost(this.api.maxHttpRetries, this.api.retryDelay, () =>
+          this.requestProduct(productId, user),
+      );
+      // product = await this.requestProduct(productId, user);
 
       // Store the requested product in the local store for future requests
       this.store.saveProduct(productId, product, user);
@@ -373,7 +377,7 @@ class Its123 {
         );
       case 'started':
       case 'in-progress':
-        this.api.epochStart = this.currentEpochTime();
+        this.api.epochStart = Its123.currentEpochTime();
         this.store.saveInstrumentStatus(accessCode, status);
 
         // Wait for resources to load
@@ -600,7 +604,7 @@ class Its123 {
         'X-123test-ApiKey': this.api.apiKey,
         'X-123test-InstrumentRun': accessCode,
         'X-123test-epochStart': this.api.epochStart,
-        'X-123test-epochEnd': this.currentEpochTime(),
+        'X-123test-epochEnd': Its123.currentEpochTime(),
       },
     });
 
