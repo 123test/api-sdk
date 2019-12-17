@@ -264,6 +264,45 @@ class Its123 {
       // Store the requested product in the local store for future requests
       this.store.saveProduct(productId, product, user);
     }
+
+    return await this.runProduct(productId, {renderReport}, prefetchedForm);
+  }
+
+  /**
+   * Run a product
+   *
+   * Runs all the required sub steps from instrument to report. All promises are chained
+   * and the final promise returns the product data when resolved.
+   *
+   * Will automatically render the first report that is available. Set `renderReport` to false
+   * to counter this behaviour.
+   *
+   * Data structure of the product object:
+   *
+   * product = {
+   *  slots: {
+   *    instruments: [],
+   *    respondent: {},
+   *  },
+   *  reports: [],
+   *  access_code: null,
+   * };
+   *
+   * @param  {Object} product object to load
+   * @param  {Boolean} [renderReport=true] Set to true to automatically call the
+   *                                       report render functions
+   * @return {Promise}
+   */
+  async runProduct(product, { renderReport = true } = {}, prefetchedForm = null) {
+
+    // Show loading div (only when not in prefetch mode)
+    if (!prefetchedForm) {
+      this.api.elements.productElement.style.display = 'none';
+      this.api.elements.loadingElement.style.display = 'block';
+    }
+
+    this.store.saveProduct(product.product_access_code, product, product.slots.respondent);
+
     this.triggerEvent('product-loaded', product);
     let instruments = product.slots.instruments;
     this.triggerEvent('instruments-loaded', instruments);
