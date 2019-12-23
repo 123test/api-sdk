@@ -265,7 +265,7 @@ class Its123 {
       this.store.saveProduct(productId, product, user);
     }
 
-    return await this.runProduct(productId, {renderReport}, prefetchedForm);
+    return await this.runProduct(productId, { renderReport }, prefetchedForm);
   }
 
   /**
@@ -346,6 +346,8 @@ class Its123 {
       await this.processApiInstrumentResponse(accessCode, result);
     }
 
+    console.log(`Render report:  ${renderReport}, Product:`);
+    console.log(product);
 
     if (renderReport) {
       // All instruments have been completed, render report
@@ -354,10 +356,12 @@ class Its123 {
       this.renderReport(body);
       this.runResourceFunctions(resources);
       this.triggerEvent('report-ready');
+    } else {
+      console.log('Render report is not loaded.');
     }
 
     // Remove this session from the local storage
-    this.store.clearProduct(productId);
+    this.store.clearProduct(product.product_access_code);
     // Trigger event and pass product info
     this.triggerEvent('product-completed', product);
 
