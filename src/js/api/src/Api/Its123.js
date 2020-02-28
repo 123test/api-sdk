@@ -402,7 +402,7 @@ class Its123 {
         break;
       default:
         // This is an unrecoverable error due to an unknown API response.
-        // The submit buttion is renabled, the user can then try to submit at a later stage.
+        // The submit buttion is reenabled, the user can then try to submit at a later stage.
         this.enableSubmitButton();
 
         // Throw an error so that the UI can show an error message.
