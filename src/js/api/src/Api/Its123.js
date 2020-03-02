@@ -258,10 +258,16 @@ class Its123 {
     product = this.store.loadProduct(productId, user);
 
     if (!product) {
-      product =
-        await tryAtMost(this.api.maxHttpRetries, this.api.retryDelay, () =>
-          this.requestProduct(productId, user),
-      );
+      try {
+        product =
+            await tryAtMost(this.api.maxHttpRetries, this.api.retryDelay, () =>
+                this.requestProduct(productId, user),
+            );
+      } catch (error) {
+        this.enableSubmitButton();
+        this.triggerEvent('instrument-submit-failed', null, 'error');
+        throw error;
+      }
 
       // Store the requested product in the local store for future requests
       this.store.saveProduct(productId, product, user);
@@ -345,6 +351,7 @@ class Its123 {
       this.runResourceFunctions(resources);
       this.triggerEvent('report-ready');
     } catch (error) {
+      this.enableSubmitButton();
       this.handleException('loadReport', error, { accessCode, metaData, metaHmac });
 
       throw error;
@@ -439,6 +446,7 @@ class Its123 {
         );
         return result;
       } catch (error) {
+        this.enableSubmitButton();
         switch (error.status) {
           case 404:
             this.triggerEvent('instrument-run-not-found', null, 'error');
