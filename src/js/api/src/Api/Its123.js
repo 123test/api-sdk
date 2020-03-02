@@ -119,7 +119,8 @@ class Its123 {
     this.api.elements.loadingElement = document.getElementById(this.api.elements.loadingElementId);
     this.api.elements.productElement = document.getElementById(this.api.elements.productElementId);
     this.api.elements.reportElement = document.getElementById(this.api.elements.reportElementId);
-    this.api.elements.prefetchResourceElement = document.getElementById(this.api.elements.prefetchResourceElementId);
+    this.api.elements.prefetchResourceElement = document.getElementById(
+      this.api.elements.prefetchResourceElementId);
 
     if (!this.api.elements.loadingElement
       || !this.api.elements.productElement || !this.api.elements.reportElement) {
@@ -145,7 +146,7 @@ class Its123 {
    */
   async loadProduct(productId, { renderReport = true, user = '' } = {}) {
     try {
-      this.api.epochStart = this.currentEpochTime();
+      this.api.epochStart = Its123.currentEpochTime();
       this.api.productId = productId;
       return await this.loadAndRunProduct(productId, { renderReport, user });
     } catch (error) {
@@ -166,11 +167,9 @@ class Its123 {
    * @see loadAndRunProduct()
    */
   async prefetchProduct(productId, { renderReport = true, user = '' } = {}) {
-
     // Load prefetched resource data
-    this.api.epochStart = this.currentEpochTime();
-    if(this.api.elements.prefetchResourceElement)
-    {
+    this.api.epochStart = Its123.currentEpochTime();
+    if (this.api.elements.prefetchResourceElement) {
       const resources = JSON.parse(atob(this.api.elements.prefetchResourceElement.value));
       await Its123.loadResources(resources);
       await this.runResourceFunctions(resources);
@@ -259,7 +258,10 @@ class Its123 {
     product = this.store.loadProduct(productId, user);
 
     if (!product) {
-      product = await this.requestProduct(productId, user);
+      product =
+        await tryAtMost(this.api.maxHttpRetries, this.api.retryDelay, () =>
+          this.requestProduct(productId, user),
+      );
 
       // Store the requested product in the local store for future requests
       this.store.saveProduct(productId, product, user);
@@ -374,7 +376,7 @@ class Its123 {
         );
       case 'started':
       case 'in-progress':
-        this.api.epochStart = this.currentEpochTime();
+        this.api.epochStart = Its123.currentEpochTime();
         this.store.saveInstrumentStatus(accessCode, status);
 
         // Wait for resources to load
@@ -399,7 +401,18 @@ class Its123 {
         this.triggerEvent('instrument-completed', { accessCode, status });
         break;
       default:
-        throw new Error(`Unexpected instrument status ${status}`);
+        // This is an unrecoverable error due to an unknown API response.
+        // The submit buttion is reenabled, the user can then try to submit at a later stage.
+        this.enableSubmitButton();
+
+        // Throw an error so that the UI can show an error message.
+        this.log('error', `123test API Server error: Unknown api instrument response status '${status}'.`);
+        this.triggerEvent('instrument-submit-failed', null, 'error');
+
+        // Call itself, using the same accesscode. This enables waiting for a new for submit.
+        return await this.processApiInstrumentResponse(accessCode,
+          await this.processFormSubmit(accessCode),
+        );
     }
 
     return {};
@@ -552,16 +565,12 @@ class Its123 {
    */
   waitForInstrumentToSubmit() {
     const className = 'its123-disabled-loading';
-    const loadingIcon = '<div class="its123-loading-spinner"><div></div><div></div><div></div></div>';
     const form = document.querySelector(this.api.elements.instrumentFormSelector);
     const button = form.querySelector('button[type=submit]');
 
     // Re-enable button if it was previously disabled by this function
     if (button.classList.contains(className)) {
-      button.disabled = false;
-      button.innerHTML = (button.getAttribute('data-label')) ?
-        button.getAttribute('data-label') : button.innerText;
-      button.classList.remove(className);
+      this.enableSubmitButton();
     }
 
     // Return a new promise that resolves when the submit button is clicked
@@ -571,19 +580,49 @@ class Its123 {
 
         // Disable submit button and add class so that we know that
         // the api js disabled the button (and not individual instrument js)
-        button.disabled = true;
-        button.classList.add(className);
-        // Save content to an attribute to reset it later
-        if (!button.getAttribute('data-label')) {
-          button.setAttribute('data-label', button.innerText);
-        }
-        button.innerHTML = loadingIcon;
+        this.disableSubmitButton();
 
         resolve({ form, event });
       });
     });
   }
 
+  /**
+   * Enable the submit button.
+   * @return {void}
+   */
+  enableSubmitButton() {
+    const className = 'its123-disabled-loading';
+    const formEl = document.querySelector(this.api.elements.instrumentFormSelector);
+    const button = formEl.querySelector('button[type=submit]');
+
+    // Re-enable button if it was previously disabled
+    if (button.classList.contains(className)) {
+      button.disabled = false;
+      button.innerHTML = (button.getAttribute('data-label')) ?
+        button.getAttribute('data-label') : button.innerText;
+      button.classList.remove(className);
+    }
+  }
+
+  /**
+   * Disable the submit button.
+   * @return {void}
+   */
+  disableSubmitButton() {
+    const className = 'its123-disabled-loading';
+    const loadingIcon = '<div class="its123-loading-spinner"><div></div><div></div><div></div></div>';
+    const form = document.querySelector(this.api.elements.instrumentFormSelector);
+    const button = form.querySelector('button[type=submit]');
+
+    button.disabled = true;
+    button.classList.add(className);
+    // Save content to an attribute to reset it later
+    if (!button.getAttribute('data-label')) {
+      button.setAttribute('data-label', button.innerText);
+    }
+    button.innerHTML = loadingIcon;
+  }
   /**
    * Submit a form to the API for a given instrument
    * @param  {String} accessCode Access code of the instrument
@@ -601,10 +640,9 @@ class Its123 {
         'X-123test-ApiKey': this.api.apiKey,
         'X-123test-InstrumentRun': accessCode,
         'X-123test-epochStart': this.api.epochStart,
-        'X-123test-epochEnd': this.currentEpochTime()
+        'X-123test-epochEnd': Its123.currentEpochTime(),
       },
     });
-
 
     const body = await response.text();
 
@@ -828,7 +866,7 @@ class Its123 {
     }
 
     // Trigger that a unhandled exception has occurred
-    this.log('error', `123test API Server error: Error Unknown, ${param}`);
+    this.log('error', `123test API Server error: Error Unknown, '${e.message}', parameters: '${param}'`);
     this.triggerEvent('api-unavailable', e, 'error');
   }
 
@@ -890,10 +928,14 @@ class Its123 {
     }
   }
 
-  currentEpochTime() {
-      const now = new Date()
-      const epoch = Math.round(now.getTime() / 1000);
-      return epoch;
+  /**
+   * Return current time in seconds.
+   * @return {Number} Time in seconds
+   */
+  static currentEpochTime() {
+    const now = new Date();
+    const epoch = Math.round(now.getTime() / 1000);
+    return epoch;
   }
 
   /**
