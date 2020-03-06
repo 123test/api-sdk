@@ -73,7 +73,7 @@ const defaultApiConfig = {
   retryDelay: 8000,
   // Number of times a user can try to resubmit a form
   maxSubmitRetries: 10,
-  // Number of times the API tries to start a prefetched product run
+  // Number of times the sdk allows a user to submit a prefetched form
   maxPrefetchRunAttempts: 10,
 
   // Whether to use localStorage for caching
