@@ -73,6 +73,8 @@ const defaultApiConfig = {
   retryDelay: 8000,
   // Number of times a user can try to resubmit a form
   maxSubmitRetries: 10,
+  // Number of times the API tries to start a prefetched product run
+  maxPrefetchRunAttempts: 10,
 
   // Whether to use localStorage for caching
   storageEnabled: true,
@@ -183,26 +185,32 @@ class Its123 {
       return this.loadProduct(productId, { renderReport, user });
     }
 
-    try {
-      // Enable localstorage support for anonymous instruments
-      // Use the product key as the id to prevent loading data from other products
-      this.loadInstrumentStateFromStorage(`st-${productId}`);
-      this.bindInstrumentStorageListeners(`st-${productId}`);
+    // Enable localstorage support for anonymous instruments
+    // Use the product key as the id to prevent loading data from other products
+    this.loadInstrumentStateFromStorage(`st-${productId}`);
+    this.bindInstrumentStorageListeners(`st-${productId}`);
 
+    let lastError = null;
+
+    for (let i = 0; i < this.api.maxPrefetchRunAttempts; i += 1) {
       // Wait for prefetched instrument to submit
       const form = await this.waitForInstrumentToSubmit();
 
       // Clear local storage from temporary instrument data
       this.store.removeByPrefix(`st-${productId}`);
 
-      return this.loadAndRunProduct(productId, { renderReport, user }, form);
-    } catch (error) {
-      // Something could be wrong with our local store,
-      // clear it to prevent any future errors
-      this.store.clearProduct(productId);
-
-      throw error;
+      try {
+        return await this.loadAndRunProduct(productId, { renderReport, user }, form);
+      } catch (error) {
+        lastError = error;
+      }
     }
+
+    // Max attempts exceeded, rethrow the last error.
+    // Something could be wrong with our local store,
+    // clear it to prevent any future errors
+    this.store.clearProduct(productId);
+    throw lastError;
   }
 
   /**
@@ -258,16 +266,10 @@ class Its123 {
     product = this.store.loadProduct(productId, user);
 
     if (!product) {
-      try {
-        product =
-            await tryAtMost(this.api.maxHttpRetries, this.api.retryDelay, () =>
-                this.requestProduct(productId, user),
-            );
-      } catch (error) {
-        this.enableSubmitButton();
-        this.triggerEvent('instrument-submit-failed', null, 'error');
-        throw error;
-      }
+      product =
+          await tryAtMost(this.api.maxHttpRetries, this.api.retryDelay, () =>
+              this.requestProduct(productId, user),
+          );
 
       // Store the requested product in the local store for future requests
       this.store.saveProduct(productId, product, user);
