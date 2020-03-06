@@ -446,7 +446,7 @@ class Its123 {
         );
         return result;
       } catch (error) {
-        this.enableSubmitButton();
+        console.log('failed try at most');
         switch (error.status) {
           case 404:
             this.triggerEvent('instrument-run-not-found', null, 'error');
