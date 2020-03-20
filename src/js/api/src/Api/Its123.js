@@ -196,12 +196,14 @@ class Its123 {
       // Wait for prefetched instrument to submit
       const form = await this.waitForInstrumentToSubmit();
 
-      // Clear local storage from temporary instrument data
-      this.store.removeByPrefix(`st-${productId}`);
-
       try {
-        return await this.loadAndRunProduct(productId, { renderReport, user }, form);
+        const loadedProduct = await this.loadAndRunProduct(productId, { renderReport, user }, form);
+        // Clear local storage data for this prefetched instrument
+        this.store.removeByPrefix(`st-${productId}`);
+
+        return loadedProduct;
       } catch (error) {
+        this.triggerEvent('prefetch-submit-failed', null, 'error');
         lastError = error;
       }
     }
