@@ -15,6 +15,13 @@ In this example, the product access code will be sent with the route: $productRo
 You'll get information from the product. You could save this data in your own database.
 
 ## Server side
+API SDK: 
+```
+Goto src/js/api
+npm run watch
+```
+
+New terminal console:
 ```
 cd ../..
 php -S localhost:8011

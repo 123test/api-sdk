@@ -68,7 +68,7 @@ class ApiLoader {
         
         $this->dynamicJS = "
     window.startIts123Api = function(uuid) {
-        window.loadIts123Api=function(a,b,c){var d=\"undefined\"!=typeof Promise&&Promise.toString().indexOf(\"[native code]\")!==-1&&window.fetch,e=function(a,b){var c=document.createElement(\"script\");c.type=\"text/javascript\",c.src=a,c.onload=b;var d=document.getElementsByTagName(\"script\")[0];d.parentNode.insertBefore(c,d)};d?e(a+\"/dist/\"+b+\"/its123api.min.js\",c):e(a+\"/assets/api/js/\"+b+\"/its123api.polyfill.min.js\",c)};
+        window.loadIts123Api=function(a,b,c){var d=\"undefined\"!=typeof Promise&&Promise.toString().indexOf(\"[native code]\")!==-1&&window.fetch,e=function(a,b){var c=document.createElement(\"script\");c.type=\"text/javascript\",c.src=a,c.onload=b;var d=document.getElementsByTagName(\"script\")[0];d.parentNode.insertBefore(c,d)};d?e(a+\"/src/js/api/\"+b+\"/its123api.js\",c):e(a+\"/assets/api/js/\"+b+\"/its123api.polyfill.min.js\",c)};
     
         var startApi = function () {
             
@@ -129,7 +129,7 @@ class ApiLoader {
             });
         };
         
-        loadIts123Api('', 'js', startApi);
+        loadIts123Api('', 'build', startApi);
     };
     
     window.startIts123Api('" . $uuid . "');
