@@ -14,3 +14,12 @@
 In this example, the product access code will be sent with the route: $productRouting -> /save-product.php?productId={product-access-code}.
 You'll get information from the product. You could save this data in your own database.
 
+## Server side
+```
+cd ../..
+php -S localhost:8011
+
+Browser
+http://localhost:8011/examples/php/test_serverside.php
+```
+

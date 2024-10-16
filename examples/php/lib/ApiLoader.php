@@ -59,22 +59,32 @@ class ApiLoader {
         $this->productRouteEndpoint = $productRouteEndpoint;
         $this->language = $language;
         $this->debugMode = $debugMode;
+
+       
     }
 
-    function api_load_product($productId, $uuid)
+    function api_load_product($productId, $uuid, $productData = null)
     {
-
+        
         $this->dynamicJS = "
     window.startIts123Api = function(uuid) {
-        window.loadIts123Api=function(a,b,c){var d=\"undefined\"!=typeof Promise&&Promise.toString().indexOf(\"[native code]\")!==-1&&window.fetch,e=function(a,b){var c=document.createElement(\"script\");c.type=\"text/javascript\",c.src=a,c.onload=b;var d=document.getElementsByTagName(\"script\")[0];d.parentNode.insertBefore(c,d)};d?e(a+\"/assets/api/js/\"+b+\"/its123api.min.js\",c):e(a+\"/assets/api/js/\"+b+\"/its123api.polyfill.min.js\",c)};
+        window.loadIts123Api=function(a,b,c){var d=\"undefined\"!=typeof Promise&&Promise.toString().indexOf(\"[native code]\")!==-1&&window.fetch,e=function(a,b){var c=document.createElement(\"script\");c.type=\"text/javascript\",c.src=a,c.onload=b;var d=document.getElementsByTagName(\"script\")[0];d.parentNode.insertBefore(c,d)};d?e(a+\"/dist/\"+b+\"/its123api.min.js\",c):e(a+\"/assets/api/js/\"+b+\"/its123api.polyfill.min.js\",c)};
     
         var startApi = function () {
             
             var api = new Its123({
                 domain: '" . $this->apiHost . "',
-                apiKey: '" . $this->apiPublicKey . "',
-            });
+                apiKey: '" . $this->apiPublicKey . "'";
+
+            if ($productData != null) {
+
+                $this->dynamicJS .= ", productData: " . json_encode($productData);
+            }    
+        
+            $this->dynamicJS .= "});
             
+            console.log(api.productData);
+
             api.on(['instrument-already-completed', 'instrument-item-data-loaded', 'instrument-continue'], function() {
                 document.getElementById('its123api-loading').style.display = 'none';
                 $('#its123api-continued-message').show();
@@ -109,7 +119,7 @@ class ApiLoader {
                     dataType: 'json'
                 });
             });
-            api.loadProduct('" . $productId . "', { renderReport: true, user: uuid });
+            api.loadProduct('" . $productId . "', { renderReport: false, user: uuid });
             
             $('#its123api-continued-message a').click(function() {
                 document.getElementById('its123api-loading').style.display = 'block';
@@ -119,7 +129,7 @@ class ApiLoader {
             });
         };
         
-        loadIts123Api('https://cdn.123test.com', 'latest', startApi);
+        loadIts123Api('', 'js', startApi);
     };
     
     window.startIts123Api('" . $uuid . "');

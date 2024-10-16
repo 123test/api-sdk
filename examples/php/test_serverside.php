@@ -39,8 +39,9 @@ unset($data['reports']);
 //Initiate ApiLoader
 $language = 'EN';
 
+
 $apiLoader = new ApiLoader($user_id, $api_public_key, "https://" . $api_domain, $productRouting, $language);
-$apiLoader->api_load_product($productId, $uuid);
+$apiLoader->api_load_product($productId, $uuid, $data);
 
 ?>
 <!DOCTYPE html>
