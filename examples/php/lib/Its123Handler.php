@@ -83,6 +83,22 @@ class Its123Handler
         return $this->requestAction("request-product",  $verifySsl, $ca_bundle_path, $channel, $productId, null, $data);
     }
 
+     /**
+     * Request access to a specific product
+     * @param string $productId The id of the product
+     * @param string $channel channel of your business
+     * @param string[] $data of your request
+     * @return Object containing the access code and session key
+     * @throws \Exception
+     */
+    public function requestAccess(
+        $productId,
+        $channel = "default",
+        $data = array()
+    ) {
+        return $this->requestAction("request-product", $verifySsl = true, $ca_bundle_path = null, $channel, $productId, null, $data);
+    }
+
     /**
      * Request an specific action of the product
      * @param string $action method of the product (required)
@@ -135,7 +151,7 @@ class Its123Handler
         }
 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLE_SSL_CACERT, '/var/www/vhosts/123test.info/api.123test.info/public/demo123/lib/v2/ca.txt');
+        
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLINFO_HEADER_OUT, $this->debugMode);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $requestData);
