@@ -1,6 +1,6 @@
 <?php
 
-require_once('lib/ApiLoader.php');
+require_once('lib/ApiLoaderServerSide.php');
 require_once('lib/Its123Handler.php');
 
 //Customer Unique UUIDv4, example: '5414fc19-3d10-49de-ab1f-ced61a3d0f5b'

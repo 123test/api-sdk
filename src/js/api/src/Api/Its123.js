@@ -84,6 +84,9 @@ const defaultApiConfig = {
   // loaded product ID
   productId: 'not-set',
 
+  // Server side product loading
+  productData: null,
+
   // Epoch time user
   epochStart: null,
   epochCompleted: null,
@@ -256,6 +259,11 @@ class Its123 {
     // Try to load product information from local storage, if it fails
     // fall back to a API request
     product = this.store.loadProduct(productId, user);
+
+    // If the product has been loaded server side
+    if (this.api.productData) {
+      product = this.api.productData;
+    }
 
     if (!product) {
       try {
