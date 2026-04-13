@@ -1,0 +1,47 @@
+@use "sass:color";
+
+/*!
+ * 123test API SDK CSS
+ * https://github.com/123test/api-sdk
+ *
+ * Workinglife theme
+ *
+ * Copyright 2026 123test
+ * Licensed under MIT
+ *
+ * Builds upon
+ * normalize.css v5.0.0 | https://github.com/necolas/normalize.css
+ * Bootstrap v4 (sass utilties) | https://getbootstrap.com
+ * SpinKit (loading icon) | https://github.com/tobiasahlin/SpinKit
+ */
+
+// Theme specific overwrites
+
+// Brand palette
+$color-primary:       #F7931D;
+$color-secondary:     #F7931D;
+
+// Typography
+$font-family:         system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$text-color:          #727377;
+
+// Buttons (solid orange, no gradient)
+$button-bg-from:      $color-primary;
+$button-bg-to:        color.adjust($color-primary, $lightness: -8%, $space: hsl);
+$button-text-color:   #ffffff;
+$button-border-radius: 8px;
+
+// Progress
+$progress-bar-color:  $color-primary;
+
+// Info state (used by loading indicator and informational alerts).
+// Default theme uses Bootstrap blue; override to brand orange.
+$state-info-text:     color.adjust($color-primary, $lightness: -25%, $space: hsl);
+$state-info-bg:       color.adjust($color-primary, $lightness: 38%, $space: hsl);
+$state-info-border:   color.adjust($color-primary, $lightness: 25%, $space: hsl);
+
+// Layout
+$border-radius:       6px;
+
+@import "../_base.scss";
+
