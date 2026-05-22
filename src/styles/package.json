@@ -4,9 +4,9 @@
   "description": "Themes for 123test API",
   "main": "index.js",
   "scripts": {
-    "build": "node-sass scss --output-style compressed --output css",
-    "minify": "node-sass scss --output-style compressed --output ../../dist/css && postcss --no-map.inline --use autoprefixer --replace ../../dist/css/themes/*.css",
-    "watch": "node-sass --watch scss --output css",
+    "build": "sass scss:css --style=compressed --no-source-map",
+    "minify": "sass scss:../../dist/css --style=compressed --no-source-map && postcss --use autoprefixer --replace ../../dist/css/themes/*.css",
+    "watch": "sass --watch scss:css",
     "server": "browser-sync start --server --files='index.html,css/**/*.css'"
   },
   "repository": {
@@ -17,8 +17,9 @@
   "license": "MIT",
   "private": true,
   "devDependencies": {
-    "autoprefixer": "^9.6.0",
-    "node-sass": "^4.12.0",
-    "postcss-cli": "^6.1.2"
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
+    "postcss-cli": "^11.0.0",
+    "sass": "^1.80.0"
   }
 }
