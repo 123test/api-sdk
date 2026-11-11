@@ -4,3 +4,4 @@ build/*
 !build/index.html
 !build/loader.html
 !build/css
+.env.sentry-build-plugin

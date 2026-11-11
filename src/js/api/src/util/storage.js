@@ -155,8 +155,15 @@ class ClientStorage {
       return;
     }
 
-    const product = JSON.parse(productJson);
-    product.slots.instruments.forEach((i) => {
+    let instruments = [];
+    try {
+      const product = JSON.parse(productJson);
+      instruments = (product && product.slots && product.slots.instruments) || [];
+    } catch (e) {
+      instruments = [];
+    }
+
+    instruments.forEach((i) => {
       this.remove(i.access_code);
       this.removeByPrefix(i.access_code);
     });
