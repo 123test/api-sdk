@@ -4,13 +4,14 @@ Legacy build for older browsers, includes polyfills
 
 
 // Import polyfill for promise
-import 'core-js/es6/promise';
+import 'core-js/es/promise';
 // Import polyfill for object functions
-import 'core-js/es6/object';
+import 'core-js/es/object/assign';
 // Import polyfill for string functions
-import 'core-js/fn/string/starts-with';
-// Import polyfill for array functions
-import 'core-js/es6/array';
+import 'core-js/es/string/starts-with';
+// Import polyfills for the array functions the SDK uses
+import 'core-js/es/array/from';
+import 'core-js/es/array/find';
 // Import polyfill for fetch
 import 'whatwg-fetch';
 

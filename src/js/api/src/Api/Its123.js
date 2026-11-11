@@ -35,6 +35,23 @@ import { tryAtMost } from '../util/promise';
 
 import ClientStorage from '../util/storage';
 
+import { captureSdkException } from '../util/sentry';
+
+import getEnvironment from '../util/environment';
+
+const UNREPORTED_STATUSES = [401, 403, 404, 408, 503];
+
+/**
+ * Whether fetch() failed because of the network (offline, blocked, CORS), not a bug.
+ * Each browser (and the whatwg-fetch polyfill) uses its own TypeError message.
+ * @param  {Object} e The error
+ * @return {Boolean}
+ */
+export function isFetchNetworkError(e) {
+  return e instanceof TypeError &&
+    /^(Failed to fetch|NetworkError when attempting to fetch resource\.|Load failed|Network request failed)$/.test(e.message);
+}
+
 /**
  * Default configuration for api, can be overriden by user
  * @type {Object}
@@ -46,6 +63,9 @@ const defaultApiConfig = {
 
   // Environment config
   logLevel: 'all', // One of: all, info, error, none
+
+  // Report unexpected SDK errors to 123test (Sentry). No personal data is sent.
+  errorReporting: true,
 
   // DOM config
   elements: {
@@ -602,10 +622,10 @@ class Its123 {
   enableSubmitButton() {
     const className = 'its123-disabled-loading';
     const formEl = document.querySelector(this.api.elements.instrumentFormSelector);
-    const button = formEl.querySelector('button[type=submit]');
+    const button = formEl && formEl.querySelector('button[type=submit]');
 
     // Re-enable button if it was previously disabled
-    if (button.classList.contains(className)) {
+    if (button && button.classList.contains(className)) {
       button.disabled = false;
       button.innerHTML = (button.getAttribute('data-label')) ?
         button.getAttribute('data-label') : button.innerText;
@@ -852,6 +872,8 @@ class Its123 {
    * @return null
    */
   async handleException(id, e, param = {}) {
+    this.reportException(id, e);
+
     switch (e.status) {
       case 401:
       case 403:
@@ -876,6 +898,42 @@ class Its123 {
     // Trigger that a unhandled exception has occurred
     this.log('error', `123test API Server error: Error Unknown, '${e.message}', parameters: '${param}'`);
     this.triggerEvent('api-unavailable', e, 'error');
+  }
+
+  /**
+   * Send an unexpected error to Sentry. Expected API responses (see UNREPORTED_STATUSES)
+   * are skipped, and network failures are sent as warnings.
+   * Only non-personal data is attached: no user ids, access codes or report meta data.
+   *
+   * @param  {String} id Error id (the SDK method that failed)
+   * @param  {Object} e  The error
+   * @return {void}
+   */
+  reportException(id, e) {
+    if (!this.api.errorReporting) {
+      return;
+    }
+
+    const status = e && e.status;
+    if (UNREPORTED_STATUSES.indexOf(status) !== -1) {
+      return;
+    }
+
+    const isNetworkError = !status && isFetchNetworkError(e);
+
+    captureSdkException(e, {
+      environment: getEnvironment(this.api.domain),
+      level: isNetworkError ? 'warning' : 'error',
+      tags: {
+        method: id,
+        status: status || 'none',
+        product: this.api.productId,
+        apiKey: this.api.apiKey,
+      },
+      context: {
+        endpoint: this.api.endpoint,
+      },
+    });
   }
 
   /**

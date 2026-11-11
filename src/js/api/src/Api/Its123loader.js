@@ -26,7 +26,11 @@
 * SOFTWARE.
 */
 
-import Its123 from './Its123';
+import Its123, { isFetchNetworkError } from './Its123';
+
+import { captureSdkException } from '../util/sentry';
+
+import getEnvironment from '../util/environment';
 
    /**
     * Default configuration for api, can be overriden by user
@@ -65,8 +69,6 @@ class Its123loader {
 
     this.DOM = {};
 
-    this.api.environment = (this.api.domain === 'https://api.123test.dev') ? 'development' : 'production';
-
     this.api.apiUrl = `https://${this.api.domain}/${this.api.version}/123test.json`;
     this.DOM.script = document.getElementById(`${this.api.elements.loaderSelectorScript}`);
     this.DOM.product = document.getElementById(`${this.api.elements.loaderSelector}`);
@@ -81,12 +83,14 @@ class Its123loader {
     }
 
     this.api.domain = Its123loader.getScriptParam('domain', this.api.scriptSrc, 'api.123test.com');
+    this.api.environment = getEnvironment(this.api.domain);
     this.api.cdnDomain = Its123loader.getScriptParam('cdnDomain', this.api.scriptSrc, 'cdn.123test.com');
     this.api.theme = Its123loader.getScriptParam('theme', this.api.scriptSrc, 'default');
     this.api.action = Its123loader.getScriptParam('action', this.api.scriptSrc, '');
     this.api.product = Its123loader.getScriptParam('product', this.api.scriptSrc, '');
     this.api.pdfType = Its123loader.getScriptParam('pdf', this.api.scriptSrc, 'none');
     this.api.language = Its123loader.getScriptParam('language', this.api.scriptSrc, 'en');
+    this.api.errorReporting = Its123loader.getScriptParam('errorReporting', this.api.scriptSrc, 'true') !== 'false';
   }
  /**
  * Gets the parameter of a loaded javascript URL
@@ -200,8 +204,11 @@ class Its123loader {
       case 'load-product':
         this.loadProduct(this.api.product);
         break;
-      default:
-        throw new Error(`Action ${its123Action} not found.`);
+      default: {
+        const error = new Error(`Action ${its123Action} not found.`);
+        this.reportException('executeAction', error);
+        throw error;
+      }
     }
   }
   async loadCatalogus() {
@@ -217,6 +224,7 @@ class Its123loader {
       permissionBlock.style.display = 'block';
       permissionBlock.innerHTML = `<p>${permissionBlock.innerHTML.replace('{catalogus-name}', this.api.product)} ${error.status}</p>`;
 
+      this.reportException('loadCatalogus', error);
       throw error;
     }
 
@@ -231,6 +239,27 @@ class Its123loader {
     oScript.src = `https://${this.api.cdnDomain}/content/api/${this.api.product}_js.php`;
 
     this.DOM.product.appendChild(oScript);
+  }
+  /**
+   * Send a loader error to Sentry (network failures as warnings). Never throws.
+   * @param  {String} id    Error id (the loader method that failed)
+   * @param  {Object} error The error
+   * @return {void}
+   */
+  reportException(id, error) {
+    if (!this.api.errorReporting) {
+      return;
+    }
+    captureSdkException(error, {
+      environment: this.api.environment,
+      level: isFetchNetworkError(error) ? 'warning' : 'error',
+      tags: {
+        method: `loader.${id}`,
+        action: this.api.action,
+        product: this.api.product,
+        apiKey: this.api.apiKey,
+      },
+    });
   }
   loadCatalogusItem(product) {
     Array.from(document.getElementsByClassName('its123-catalogus'))
@@ -252,6 +281,7 @@ class Its123loader {
       const api = new Its123({
         apiKey: this.api.apiKey,
         domain: `https://${this.api.domain}`,
+        errorReporting: this.api.errorReporting,
       });
       // Error Presentation view
       api.on(['instrument-already-completed', 'instrument-item-data-loaded', 'instrument-continue'], () => {
